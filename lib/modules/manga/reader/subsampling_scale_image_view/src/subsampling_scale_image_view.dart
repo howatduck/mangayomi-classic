@@ -947,12 +947,7 @@ class _SubsamplingScaleImageViewState extends State<SubsamplingScaleImageView>
         final int destHeight = (bottom - top) ~/ tile.sampleSize;
 
         final pointer = Pointer<Uint8>.fromAddress(result.pointerAddress!);
-        // CLASSIC PATCH: trust the decoder's actual output size. The
-        // software fallback may return a downscaled region (OOM guard),
-        // which differs from the requested dest size.
-        final int outWidth = result.width > 0 ? result.width : destWidth;
-        final int outHeight = result.height > 0 ? result.height : destHeight;
-        final bytes = pointer.asTypedList(outWidth * outHeight * 4);
+        final bytes = pointer.asTypedList(destWidth * destHeight * 4);
 
         if (!mounted) {
           calloc.free(pointer);
@@ -962,8 +957,8 @@ class _SubsamplingScaleImageViewState extends State<SubsamplingScaleImageView>
         try {
           ui.decodeImageFromPixels(
             bytes,
-            outWidth,
-            outHeight,
+            destWidth,
+            destHeight,
             ui.PixelFormat.rgba8888,
             (ui.Image img) {
               calloc.free(pointer);
