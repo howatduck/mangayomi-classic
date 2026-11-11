@@ -32,7 +32,19 @@ String? customDns;
 
 class MClient {
   MClient();
-  static final defaultClient = IOClient(HttpClient());
+
+  // CLASSIC PATCH: dedicated TLS context for this client only. main()
+  // builds it from the platform roots plus the bundled ISRG roots
+  // (Android 6's trust store predates them) and assigns it here before
+  // runApp, so the extra roots are not trusted process-wide.
+  static SecurityContext? classicTlsContext;
+
+  // SHA-256 of assets/certs/isrg_roots.pem as loaded at runtime; the
+  // context above is only built when the bundled PEM matches.
+  static const String classicIsrgPemSha256 =
+      '0cd98d2dd7a71afe5e2e93673933f15254c5a41a9be4682f27ec582e72c52ce0';
+
+  static final defaultClient = IOClient(HttpClient(context: classicTlsContext));
   static final Map<rhttp.ClientSettings, Client> rhttpPool = {};
   static Client httpClient({
     Map<String, dynamic>? reqcopyWith,
@@ -40,9 +52,9 @@ class MClient {
   }) {
     // CLASSIC PATCH (Android 6): rhttp's TLS stack cannot verify the
     // certificate chains of several source/image hosts with API 23's
-    // platform trust store, so always use the Dart client. Its default
-    // SecurityContext is augmented in main() with the bundled ISRG
-    // roots, which is what makes those hosts verify.
+    // platform trust store, so always use the Dart client. It uses a
+    // dedicated SecurityContext (platform roots + bundled ISRG roots,
+    // built in main()), which is what makes those hosts verify.
     return defaultClient;
     if (!(reqcopyWith?["useDartHttpClient"] ?? false)) {
       try {

@@ -24,6 +24,7 @@ import 'package:mangayomi/models/tracker_library_cache.dart';
 import 'package:mangayomi/utils/extensions/string_extensions.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:path/path.dart' as path;
 import 'package:mangayomi/utils/platform_utils.dart';
 
@@ -54,6 +55,23 @@ class StorageProvider {
 
   Future<bool> requestPermission() async {
     if (!Platform.isAndroid) return true;
+    // CLASSIC PATCH: MANAGE_EXTERNAL_STORAGE is an API 30+ concept. On
+    // API <= 28 devices permission_handler never shows a prompt for
+    // it, so downloads failed silently with no way for the user to
+    // grant access. Ask for the legacy storage permission there
+    // instead, and send permanently-denied users to system settings.
+    try {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (androidInfo.version.sdkInt <= 28) {
+        final granted = await askPermission(Permission.storage);
+        if (!granted && await Permission.storage.isPermanentlyDenied) {
+          await openAppSettings();
+        }
+        return granted;
+      }
+    } catch (_) {
+      // Fall through to the modern permission on detection failure.
+    }
     return askPermission(Permission.manageExternalStorage);
   }
 

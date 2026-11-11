@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'dart:io';
 
 import 'package:app_links/app_links.dart';
@@ -85,16 +86,22 @@ void main(List<String> args) async {
       // CLASSIC PATCH: the Android 6 system CA store predates the ISRG
       // roots, so every Let's Encrypt site fails TLS verification in
       // Dart (CERTIFICATE_VERIFY_FAILED) while the WebView still works.
-      // Trust the bundled ISRG Root X1/X2 in the default context.
+      // Build a dedicated SecurityContext (platform roots + bundled
+      // ISRG roots, fingerprint-pinned) and hand it to MClient only,
+      // instead of trusting the extra roots process-wide.
       try {
         final isrgRoots = await rootBundle.loadString(
           'assets/certs/isrg_roots.pem',
         );
-        SecurityContext.defaultContext.setTrustedCertificatesBytes(
-          utf8.encode(isrgRoots),
-        );
+        final pemBytes = utf8.encode(isrgRoots);
+        if (sha256.convert(pemBytes).toString() ==
+            MClient.classicIsrgPemSha256) {
+          final ctx = SecurityContext(withTrustedRoots: true);
+          ctx.setTrustedCertificatesBytes(pemBytes);
+          MClient.classicTlsContext = ctx;
+        }
       } catch (_) {
-        // Best effort: platforms that reject custom roots keep defaults.
+        // Best effort: MClient keeps the platform default context.
       }
 
       // Cap the decoded image cache so a large library grid can't fill the

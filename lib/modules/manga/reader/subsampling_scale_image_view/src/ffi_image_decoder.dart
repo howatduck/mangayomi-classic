@@ -71,7 +71,50 @@ class FfiImageDecoder {
   static DynamicLibrary? _dylib;
 
   bool _isRunning = false;
-  bool _classicNativeUnsupported = false;
+
+  // CLASSIC PATCH: the bundled native decoder loads AImageDecoder
+  // symbols (Android 11+ / API 30) at init and can never work below
+  // that, so the software fallback is chosen deterministically from
+  // the OS version instead of latching onto an error string after a
+  // wasted FFI attempt. On API 30+ nothing latches: a failed decode
+  // falls back per image only.
+  static bool? _sdkBelow30Cache;
+
+  static bool _sdkBelow30() {
+    final cached = _sdkBelow30Cache;
+    if (cached != null) return cached;
+    var result = false;
+    if (Platform.isAndroid) {
+      final v = Platform.operatingSystemVersion;
+      final sdk = RegExp(r'SDK (\d+)').firstMatch(v);
+      if (sdk != null) {
+        result = int.parse(sdk.group(1)!) < 30;
+      } else {
+        final rel = RegExp(r'Android (\d+)').firstMatch(v);
+        if (rel != null) result = int.parse(rel.group(1)!) < 11;
+      }
+    }
+    return _sdkBelow30Cache = result;
+  }
+
+  // Tokens cancelled while a software-fallback decode is in flight.
+  // The fallback does not go through the FFI job queue, so cancel()
+  // records the token here and decodeRegionAsync frees the buffer
+  // itself instead of handing ownership to a caller that went away.
+  final Set<Object> _classicCancelledTokens = <Object>{};
+
+  // Frees the fallback buffer when the caller cancelled mid-decode.
+  DecodeResult? _classicGuardCancelled(
+    DecodeResult? result,
+    Object? cancelToken,
+  ) {
+    if (result == null || cancelToken == null) return result;
+    if (!_classicCancelledTokens.remove(cancelToken)) return result;
+    if (result.pointerAddress != null) {
+      calloc.free(Pointer<Uint8>.fromAddress(result.pointerAddress!));
+    }
+    return DecodeResult(error: 'Cancelled');
+  }
   Future<void>? _startFuture;
   Isolate? _cIsolate;
   ReceivePort? _receivePort;
@@ -84,6 +127,9 @@ class FfiImageDecoder {
   int _activeJobs = 0;
 
   void cancel(Object token) {
+    // CLASSIC PATCH: also remember the token so an in-flight software
+    // fallback decode can free its buffer instead of leaking it.
+    _classicCancelledTokens.add(token);
     _queue.removeWhere((job) {
       if (job.cancelToken == token) {
         if (!job.completer.isCompleted) {
@@ -387,7 +433,12 @@ class FfiImageDecoder {
     DecodeParams params, {
     Object? cancelToken,
   }) async {
-    if (_classicNativeUnsupported) return _classicDecodeRegion(params);
+    if (_sdkBelow30()) {
+      return _classicGuardCancelled(
+        await _classicDecodeRegion(params),
+        cancelToken,
+      );
+    }
     await start();
     if (_sendPort == null) {
       if (kDebugMode) {
@@ -413,9 +464,13 @@ class FfiImageDecoder {
       return ffiResult;
     }
     if (ffiResult?.error == 'Cancelled') return ffiResult;
-    // CLASSIC PATCH: the native decoder needs AImageDecoder (Android 11+);
-    // on older Android it can never initialise, so decode with dart:ui.
-    return await _classicDecodeRegion(params) ?? ffiResult;
+    // CLASSIC PATCH: the native decoder needs AImageDecoder (Android
+    // 11+); where it cannot run, decode with dart:ui instead.
+    return _classicGuardCancelled(
+          await _classicDecodeRegion(params),
+          cancelToken,
+        ) ??
+        ffiResult;
   }
 
   Future<List<int>?> getImageDimensionsAsync(
@@ -423,7 +478,7 @@ class FfiImageDecoder {
     bool cropBorders = false,
     Object? cancelToken,
   }) async {
-    if (_classicNativeUnsupported) return _classicReadDimensions(filePath);
+    if (_sdkBelow30()) return _classicReadDimensions(filePath);
     await start();
     if (_sendPort == null) {
       if (kDebugMode) {
@@ -505,11 +560,10 @@ class FfiImageDecoder {
               if (kDebugMode) {
                 print('Image job failed: ${response['error']}');
               }
-              final errStr = '${response['error']}';
-              if (errStr.contains('Failed to initialize decoder') ||
-                  errStr.contains('Error initializing FFI decoder')) {
-                _classicNativeUnsupported = true;
-              }
+              // CLASSIC PATCH: no process-wide latch on errors. Below
+              // API 30 the fallback is pre-selected by _sdkBelow30();
+              // on API 30+ a failure falls back per image in the
+              // callers above.
               if (job.action == 'getDimensions') {
                 job.completer.complete(null);
               } else {
@@ -706,40 +760,62 @@ Future<List<int>?> _classicReadDimensions(String path) async {
 }
 
 Future<DecodeResult?> _classicDecodeRegion(DecodeParams params) async {
+  ui.ImmutableBuffer? buffer;
   try {
     final bytes = await File(params.filePath).readAsBytes();
-    final buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
-    final codec = await ui.instantiateImageCodecFromBuffer(buffer);
+    buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
+
+    // CLASSIC PATCH (OOM guard): a long webtoon page (e.g. 1000x30000)
+    // expands to ~120 MB of RGBA, and decoding several full-size pages
+    // in a row OOMs small-heap devices. When the longest side exceeds
+    // 4096 px, decode at a reduced target size and scale the requested
+    // region by the same factor. Trade-off: pinch-zoom on such pages
+    // tops out at the reduced resolution.
+    var scale = 1.0;
+    int fullW = 0;
+    int fullH = 0;
+    final dims = await _classicReadDimensions(params.filePath);
+    if (dims != null && dims[0] > 0 && dims[1] > 0) {
+      fullW = dims[0];
+      fullH = dims[1];
+      final longest = fullW > fullH ? fullW : fullH;
+      if (longest > 4096) scale = 4096 / longest;
+    }
+
+    final codec = await ui.instantiateImageCodecFromBuffer(
+      buffer,
+      targetWidth: scale < 1.0 ? (fullW * scale).round() : null,
+      targetHeight: scale < 1.0 ? (fullH * scale).round() : null,
+    );
     final frame = await codec.getNextFrame();
     codec.dispose();
     final full = frame.image;
+    buffer.dispose();
+    buffer = null;
 
-    final regionW = params.right - params.left;
-    final regionH = params.bottom - params.top;
+    final srcL = params.left * scale;
+    final srcT = params.top * scale;
+    final srcR = params.right * scale;
+    final srcB = params.bottom * scale;
     final sample = params.sampleSize < 1 ? 1 : params.sampleSize;
-    final destW = regionW ~/ sample;
-    final destH = regionH ~/ sample;
+    final destW = ((srcR - srcL) / sample).floor();
+    final destH = ((srcB - srcT) / sample).floor();
     if (destW <= 0 || destH <= 0) {
       full.dispose();
       return null;
     }
 
     ui.Image out = full;
-    if (params.left != 0 ||
-        params.top != 0 ||
-        regionW != full.width ||
-        regionH != full.height ||
+    if (srcL != 0 ||
+        srcT != 0 ||
+        (srcR - srcL) != full.width ||
+        (srcB - srcT) != full.height ||
         sample != 1) {
       final recorder = ui.PictureRecorder();
       final canvas = ui.Canvas(recorder);
       canvas.drawImageRect(
         full,
-        ui.Rect.fromLTRB(
-          params.left.toDouble(),
-          params.top.toDouble(),
-          params.right.toDouble(),
-          params.bottom.toDouble(),
-        ),
+        ui.Rect.fromLTRB(srcL, srcT, srcR, srcB),
         ui.Rect.fromLTWH(0, 0, destW.toDouble(), destH.toDouble()),
         ui.Paint()..filterQuality = ui.FilterQuality.medium,
       );
@@ -762,6 +838,9 @@ Future<DecodeResult?> _classicDecodeRegion(DecodeParams params) async {
       height: destH,
     );
   } catch (_) {
+    try {
+      buffer?.dispose();
+    } catch (_) {}
     return null;
   }
 }
