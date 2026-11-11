@@ -298,13 +298,8 @@ class _MinSubsamplingImageState extends ConsumerState<MinSubsamplingImage> {
         throw Exception(result.error ?? "Failed to decode region");
       }
 
-      // CLASSIC PATCH: trust the decoder's actual output size (the
-      // software fallback may downscale large regions; see
-      // ffi_image_decoder.dart).
-      final decodedWidth =
-          result.width > 0 ? result.width : croppedWidth ~/ sampleSize;
-      final decodedHeight =
-          result.height > 0 ? result.height : croppedHeight ~/ sampleSize;
+      final decodedWidth = croppedWidth ~/ sampleSize;
+      final decodedHeight = croppedHeight ~/ sampleSize;
 
       final pointer = Pointer<Uint8>.fromAddress(result.pointerAddress!);
       final bytes = pointer.asTypedList(decodedWidth * decodedHeight * 4);
