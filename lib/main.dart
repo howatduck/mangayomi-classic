@@ -176,7 +176,31 @@ void main(List<String> args) async {
       // The background work notification's buttons reach the app through
       // this port.
       if (Platform.isAndroid) FlutterForegroundTask.initCommunicationPort();
-      runApp(
+        // CLASSIC DEBUG: capture framework/async errors to shared storage -
+  // release builds on API 23 give no usable logcat, so reader failures
+  // are diagnosed from this file instead.
+  try {
+    final logFile = File('/storage/emulated/0/Mangayomi/reader_error.log');
+    FlutterError.onError = (details) {
+      try {
+        logFile.writeAsStringSync(
+          'FE: ${details.exception}\n${details.stack}\n---\n',
+          mode: FileMode.append,
+        );
+      } catch (_) {}
+    };
+    PlatformDispatcher.instance.onError = (error, stack) {
+      try {
+        logFile.writeAsStringSync(
+          'PD: $error\n$stack\n---\n',
+          mode: FileMode.append,
+        );
+      } catch (_) {}
+      return false;
+    };
+  } catch (_) {}
+
+runApp(
         startupError != null
             ? _StartupErrorApp(error: startupError.toString())
             : ProviderScope(child: MyApp(), retry: (retryCount, error) => null),
