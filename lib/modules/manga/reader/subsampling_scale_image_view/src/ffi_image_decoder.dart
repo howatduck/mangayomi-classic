@@ -489,6 +489,10 @@ class FfiImageDecoder {
               if (kDebugMode) {
                 print('Image job failed: ${response['error']}');
               }
+              try {
+                      File('/storage/emulated/0/Mangayomi/reader_error.log')
+                          .writeAsStringSync('FFI ${job.action}: ${response['error']}\n', mode: FileMode.append);
+                    } catch (_) {}
               if (job.action == 'getDimensions') {
                 job.completer.complete(null);
               } else {
