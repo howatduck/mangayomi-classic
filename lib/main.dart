@@ -82,6 +82,21 @@ void main(List<String> args) async {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
+      // CLASSIC PATCH: the Android 6 system CA store predates the ISRG
+      // roots, so every Let's Encrypt site fails TLS verification in
+      // Dart (CERTIFICATE_VERIFY_FAILED) while the WebView still works.
+      // Trust the bundled ISRG Root X1/X2 in the default context.
+      try {
+        final isrgRoots = await rootBundle.loadString(
+          'assets/certs/isrg_roots.pem',
+        );
+        SecurityContext.defaultContext.setTrustedCertificatesBytes(
+          utf8.encode(isrgRoots),
+        );
+      } catch (_) {
+        // Best effort: platforms that reject custom roots keep defaults.
+      }
+
       // Cap the decoded image cache so a large library grid can't fill the
       // default 100 MB ceiling with full-resolution covers and OOM constrained
       // mobile heaps. Mobile gets a tight 64 MB; desktop keeps 256 MB.
