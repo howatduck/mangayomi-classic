@@ -505,10 +505,6 @@ class FfiImageDecoder {
               if (kDebugMode) {
                 print('Image job failed: ${response['error']}');
               }
-              try {
-                      File('/storage/emulated/0/Mangayomi/reader_error.log')
-                          .writeAsStringSync('FFI ${job.action}: ${response['error']}\n', mode: FileMode.append);
-                    } catch (_) {}
               final errStr = '${response['error']}';
               if (errStr.contains('Failed to initialize decoder') ||
                   errStr.contains('Error initializing FFI decoder')) {
