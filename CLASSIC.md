@@ -82,6 +82,12 @@ flutter pub get
 cd android && ./gradlew :app:assembleRelease -Ptarget-platform=android-arm,android-arm64
 ```
 
+Per-ABI split APKs: build with `-Ptarget-platform=android-arm64` (or
+`android-arm` for armv7), then strip the other ABI's `lib/` entries from
+the APK, apply the kernel-gate patch, zipalign and re-sign. The arm64
+split carries the kernel-gate patch; the armv7 split does not yet —
+on armv7 the stock libmdbx gate still requires kernel 3.16+.
+
 ## On-device verification (2026-11-11)
 
 The patched release APK was installed on the reference tablet: the app
