@@ -128,12 +128,7 @@ class _TvPillState extends State<TvPill> {
           duration: ShioriMotion.fast,
           curve: Curves.easeOut,
           transform: Matrix4.identity()
-            ..scaleByDouble(
-              _focused ? 1.08 : 1.0,
-              _focused ? 1.08 : 1.0,
-              _focused ? 1.08 : 1.0,
-              1,
-            ),
+            ..scale(_focused ? 1.08 : 1.0, _focused ? 1.08 : 1.0, _focused ? 1.08 : 1.0),
           transformAlignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
           decoration: BoxDecoration(

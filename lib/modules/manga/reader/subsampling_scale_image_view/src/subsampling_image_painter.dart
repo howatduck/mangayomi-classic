@@ -74,17 +74,26 @@ class SubsamplingImageRenderWidget extends LeafRenderObjectWidget {
 /// It directly handles global transformations (translation, scale, rotation) without allocating intermediate objects at each frame.
 class RenderSubsamplingImage extends RenderBox {
   RenderSubsamplingImage({
-    required this._tilingEngine,
-    required this._scale,
-    required this._vTranslate,
-    required this._rotation,
-    required this._sWidth,
-    required this._sHeight,
-    this._color,
-    this._colorBlendMode,
-    required this._filterQuality,
-    required this._preferredSize,
-  });
+    required TilingEngine tilingEngine,
+    required double scale,
+    required ui.Offset vTranslate,
+    required int rotation,
+    required int sWidth,
+    required int sHeight,
+    Color? color,
+    BlendMode? colorBlendMode,
+    required FilterQuality filterQuality,
+    required Size preferredSize,
+  })  : _tilingEngine = tilingEngine,
+        _scale = scale,
+        _vTranslate = vTranslate,
+        _rotation = rotation,
+        _sWidth = sWidth,
+        _sHeight = sHeight,
+        _color = color,
+        _colorBlendMode = colorBlendMode,
+        _filterQuality = filterQuality,
+        _preferredSize = preferredSize; // CLASSIC: Dart 3.8 has no private named parameters
 
   TilingEngine _tilingEngine;
   TilingEngine get tilingEngine => _tilingEngine;

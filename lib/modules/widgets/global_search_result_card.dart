@@ -84,12 +84,7 @@ class _GlobalSearchResultCardState extends ConsumerState<GlobalSearchResultCard>
           curve: Curves.easeOut,
           // Matches the library cover: accent ring plus a slight lift.
           transform: Matrix4.identity()
-            ..scaleByDouble(
-              _focused ? 1.06 : 1.0,
-              _focused ? 1.06 : 1.0,
-              _focused ? 1.06 : 1.0,
-              1,
-            ),
+            ..scale(_focused ? 1.06 : 1.0, _focused ? 1.06 : 1.0, _focused ? 1.06 : 1.0),
           transformAlignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(ShioriShape.cover),

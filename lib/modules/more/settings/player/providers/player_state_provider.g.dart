@@ -48,7 +48,7 @@ abstract class _$DefaultSubtitleLangState extends $Notifier<Locale> {
   Locale build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<Locale, Locale>;
     final element =
         ref.element
@@ -58,7 +58,7 @@ abstract class _$DefaultSubtitleLangState extends $Notifier<Locale> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -102,7 +102,7 @@ abstract class _$MarkEpisodeAsSeenTypeState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -112,7 +112,7 @@ abstract class _$MarkEpisodeAsSeenTypeState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -156,7 +156,7 @@ abstract class _$DefaultSkipIntroLengthState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -166,7 +166,7 @@ abstract class _$DefaultSkipIntroLengthState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -212,7 +212,7 @@ abstract class _$DefaultDoubleTapToSkipLengthState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -222,7 +222,7 @@ abstract class _$DefaultDoubleTapToSkipLengthState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -265,7 +265,7 @@ abstract class _$DefaultPlayBackSpeedState extends $Notifier<double> {
   double build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<double, double>;
     final element =
         ref.element
@@ -275,7 +275,7 @@ abstract class _$DefaultPlayBackSpeedState extends $Notifier<double> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -318,7 +318,7 @@ abstract class _$FullScreenPlayerState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -328,7 +328,7 @@ abstract class _$FullScreenPlayerState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -371,7 +371,7 @@ abstract class _$EnableAniSkipState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -381,7 +381,7 @@ abstract class _$EnableAniSkipState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -424,7 +424,7 @@ abstract class _$EnableAutoSkipState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -434,7 +434,7 @@ abstract class _$EnableAutoSkipState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -477,7 +477,7 @@ abstract class _$AniSkipTimeoutLengthState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -487,7 +487,7 @@ abstract class _$AniSkipTimeoutLengthState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -529,7 +529,7 @@ abstract class _$UseLibassState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -539,7 +539,7 @@ abstract class _$UseLibassState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -581,7 +581,7 @@ abstract class _$UseMpvConfigState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -591,7 +591,7 @@ abstract class _$UseMpvConfigState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -634,7 +634,7 @@ abstract class _$ForceLandscapePlayerState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -644,7 +644,7 @@ abstract class _$ForceLandscapePlayerState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -687,7 +687,7 @@ abstract class _$RememberPlayerVolumeState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -697,7 +697,7 @@ abstract class _$RememberPlayerVolumeState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -741,7 +741,7 @@ abstract class _$RememberPlayerBrightnessState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -751,7 +751,7 @@ abstract class _$RememberPlayerBrightnessState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -800,7 +800,7 @@ abstract class _$PlayerVideoFitState extends $Notifier<BoxFit> {
   BoxFit build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<BoxFit, BoxFit>;
     final element =
         ref.element
@@ -810,7 +810,7 @@ abstract class _$PlayerVideoFitState extends $Notifier<BoxFit> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -859,7 +859,7 @@ abstract class _$SubtitlesOnByDefaultState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -869,6 +869,6 @@ abstract class _$SubtitlesOnByDefaultState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }

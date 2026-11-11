@@ -1,3 +1,4 @@
+import 'dart:ui' show Brightness; // CLASSIC
 import 'package:flutter/widgets.dart';
 import 'package:mangayomi/providers/flex_scheme_color_state_provider.dart';
 import 'package:mangayomi/repositories/settings_repository.dart';

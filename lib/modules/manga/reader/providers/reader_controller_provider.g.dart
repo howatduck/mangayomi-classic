@@ -84,7 +84,7 @@ abstract class _$CurrentIndex extends $Notifier<int> {
   int build(Chapter chapter);
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -94,7 +94,7 @@ abstract class _$CurrentIndex extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, () => build(_$args));
+    element.handleCreate(ref, () => build(_$args));
   }
 }
 
@@ -181,7 +181,7 @@ abstract class _$ReaderController extends $Notifier<KeepAliveLink> {
   KeepAliveLink build({required Chapter chapter});
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<KeepAliveLink, KeepAliveLink>;
     final element =
         ref.element
@@ -191,6 +191,6 @@ abstract class _$ReaderController extends $Notifier<KeepAliveLink> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, () => build(chapter: _$args));
+    element.handleCreate(ref, () => build(chapter: _$args));
   }
 }

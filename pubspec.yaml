@@ -5,7 +5,7 @@ publish_to: "none"
 version: 0.9.95+128
 
 environment:
-  sdk: ^3.13.7
+  sdk: ^3.8.0
 
 dependencies:
   flutter:
@@ -73,7 +73,8 @@ dependencies:
   flutter_qjs:
     git:
       url: https://github.com/kodjodevf/flutter_qjs.git
-      ref: main
+      # CLASSIC: last commit whose pubspec allows Dart 3.8
+      ref: f1e4993b631725f7611f80a3f0ba21eea127d945
   http: ^1.6.0
   re_editor: ^0.10.0
   re_highlight: ^0.0.3
@@ -105,46 +106,56 @@ dependencies:
   local_auth: ^3.0.1
   wakelock_plus: ^1.7.0
   m_extension_server:
-    git:
-      url: https://github.com/kodjodevf/m_extension_server.git
+    # CLASSIC: vendored (upstream git package requires Dart >=3.13); see CLASSIC.md
+    path: packages/m_extension_server
   flutter_tts: ^4.2.5
-  code_assets: ^2.0.0
-  hooks: ^2.2.0
-  native_toolchain_c: ^0.19.4
-  cupertino_ui: ^1.0.2
   image: ^4.10.1
   flutter_foreground_task: ^9.2.2
 
 dependency_overrides:
+  go_router: 17.0.0
+  analyzer: 8.1.1
+  package_info_plus_platform_interface: 3.2.1
+  device_info_plus_platform_interface: 7.0.3
+  wakelock_plus: 1.4.0
+  share_plus: 12.0.2
+  file_picker: 11.0.3
+  app_links: 6.4.1
+  flutter_riverpod: 3.3.2-dev.2
+  riverpod_annotation: 4.0.3-dev.2
+  font_awesome_flutter: 10.9.1
+  flex_color_scheme: 8.2.0-dev.1
+  google_fonts: 6.3.2
+  url_launcher: 6.3.2
+  external_path: 2.2.0
+  desktop_webview_window: 0.3.2
+  flutter_web_auth_2: 5.1.0
+  cupertino_icons: 1.0.8
+  ffigen: 20.1.1
+  flutter_rust_bridge: 2.12.0
+  win32: 5.15.0
+  win32_registry: 2.1.0
+  d4rt: 0.2.4
+  local_auth: 2.3.0
+  meta: 1.17.0
+  isar_community: 3.4.1
   protobuf: ^5.0.0
   ffi: ^2.1.3
   html: 0.15.6
-  package_info_plus:
-    git:
-      url: https://github.com/kodjodevf/plus_plugins.git
-      path: packages/package_info_plus/package_info_plus
-      ref: main
-  device_info_plus:
-    git:
-      url: https://github.com/kodjodevf/plus_plugins.git
-      path: packages/device_info_plus/device_info_plus
-      ref: main
+  flutter_tts: 4.2.3 # CLASSIC: 4.2.5 declares minSdk 24; 4.2.3 has 21
+  flutter_secure_storage: 10.2.0 # CLASSIC: 11.x windows impl needs win32 6
+  flutter_secure_storage_windows: 4.1.0 # CLASSIC: pairs with win32 5.x
+  package_info_plus: 9.0.1 # CLASSIC: hosted (upstream git fork declares language version 3.10)
+  device_info_plus: 12.3.0 # CLASSIC: hosted (upstream git fork declares language version 3.10)
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.16.0
-  riverpod_generator: ^4.0.9
   flutter_launcher_icons: ^0.14.3
-  isar_community_generator: ^3.4.1
-  flutter_lints: ^6.0.0
-  freezed: ^4.0.3
-  inno_bundle: ^0.12.0
-  protoc_plugin: ^23.0.0
+  freezed: 3.2.5 # CLASSIC: flutter_rust_bridge_codegen 2.12 requires freezed presence (check only)
+  build_runner: ^2.4.14 # CLASSIC: same reason as above
 
 flutter:
-  config:
-    enable-swift-package-manager: false
   uses-material-design: true
   generate: true
 

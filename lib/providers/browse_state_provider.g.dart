@@ -48,7 +48,7 @@ abstract class _$AndroidProxyServerState extends $Notifier<String> {
   String build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<String, String>;
     final element =
         ref.element
@@ -58,7 +58,7 @@ abstract class _$AndroidProxyServerState extends $Notifier<String> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -104,7 +104,7 @@ abstract class _$AutoStartExtensionServerOnLaunchState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -114,7 +114,7 @@ abstract class _$AutoStartExtensionServerOnLaunchState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -158,7 +158,7 @@ abstract class _$OnlyIncludePinnedSourceState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -168,7 +168,7 @@ abstract class _$OnlyIncludePinnedSourceState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -210,7 +210,7 @@ abstract class _$ShowNSFWState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -220,7 +220,7 @@ abstract class _$ShowNSFWState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -264,7 +264,7 @@ abstract class _$ShowNavDoubleTapTooltipState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -274,7 +274,7 @@ abstract class _$ShowNavDoubleTapTooltipState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -362,7 +362,7 @@ abstract class _$ExtensionsRepoState extends $Notifier<List<Repo>> {
   List<Repo> build(ItemType itemType);
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<List<Repo>, List<Repo>>;
     final element =
         ref.element
@@ -372,7 +372,7 @@ abstract class _$ExtensionsRepoState extends $Notifier<List<Repo>> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, () => build(_$args));
+    element.handleCreate(ref, () => build(_$args));
   }
 }
 
@@ -415,7 +415,7 @@ abstract class _$AutoUpdateExtensionsState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -425,7 +425,7 @@ abstract class _$AutoUpdateExtensionsState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -469,7 +469,7 @@ abstract class _$CheckForExtensionsUpdateState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -479,7 +479,7 @@ abstract class _$CheckForExtensionsUpdateState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 

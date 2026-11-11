@@ -136,7 +136,8 @@ class _CategoriesTabState extends ConsumerState<CategoriesTab> {
             buildDefaultDragHandles: false,
             itemCount: _entries.length,
             padding: const EdgeInsets.only(bottom: 100),
-            onReorderItem: (int oldIndex, int newIndex) async {
+            onReorder: (oldIndex, newIndexRaw) async { // CLASSIC: Flutter 3.32 onReorder semantics
+              final newIndex = newIndexRaw > oldIndex ? newIndexRaw - 1 : newIndexRaw;
               final item = _entries.removeAt(oldIndex);
               _entries.insert(newIndex, item);
               final now = DateTime.now().millisecondsSinceEpoch;

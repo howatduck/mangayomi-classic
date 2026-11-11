@@ -16,11 +16,11 @@ Future addTorrentFromUrlOrFromFile(
 }) async {
   List<PlatformFile>? files;
   if (url == null) {
-    files = await FilePicker.pickFiles(
+    files = (await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['torrent'],
-      linuxOptions: const LinuxOptions(lockParentWindow: true),
-    );
+      lockParentWindow: true,
+    ))?.files;
   }
 
   if (files?.isNotEmpty ?? false || url != null) {

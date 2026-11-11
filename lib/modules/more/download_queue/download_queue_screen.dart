@@ -114,7 +114,8 @@ class _DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
             // onReorderItem already accounts for the item being lifted out at
             // oldIndex, so newIndex arrives adjusted and must not be shifted
             // again here.
-            onReorderItem: (oldIndex, newIndex) {
+            onReorder: (oldIndex, newIndexRaw) { // CLASSIC: Flutter 3.32 onReorder semantics
+              final newIndex = newIndexRaw > oldIndex ? newIndexRaw - 1 : newIndexRaw;
               final ids = entries.map((e) => e.id!).toList();
               final moved = ids.removeAt(oldIndex);
               ids.insert(newIndex, moved);

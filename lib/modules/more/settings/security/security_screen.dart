@@ -47,8 +47,7 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
     try {
       return await _localAuth.authenticate(
         localizedReason: l10n.auth_to_change_security_setting,
-        biometricOnly: false,
-        persistAcrossBackgrounding: true,
+        options: const AuthenticationOptions(biometricOnly: false, stickyAuth: true), // CLASSIC: local_auth 2.3 API
       );
     } catch (_) {
       return false;

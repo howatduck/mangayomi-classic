@@ -97,7 +97,7 @@ abstract class _$DateFormatState extends $Notifier<String> {
   String build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<String, String>;
     final element =
         ref.element
@@ -107,7 +107,7 @@ abstract class _$DateFormatState extends $Notifier<String> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -150,7 +150,7 @@ abstract class _$RelativeTimesTampsState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -160,6 +160,6 @@ abstract class _$RelativeTimesTampsState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }

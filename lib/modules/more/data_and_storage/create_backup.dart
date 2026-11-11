@@ -79,9 +79,7 @@ class _CreateBackupState extends ConsumerState<CreateBackup> {
                               .path;
                     } else {
                       result = await FilePicker.getDirectoryPath(
-                        linuxOptions: const LinuxOptions(
-                          lockParentWindow: true,
-                        ),
+                        lockParentWindow: true,
                       );
                     }
                     if (result != null && context.mounted) {

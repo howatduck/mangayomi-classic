@@ -49,7 +49,7 @@ abstract class _$SubtitleSettingsState
   PlayerSubtitleSettings build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref =
         this.ref as $Ref<PlayerSubtitleSettings, PlayerSubtitleSettings>;
     final element =
@@ -60,7 +60,7 @@ abstract class _$SubtitleSettingsState
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -108,7 +108,7 @@ abstract class _$VideoFiltersState extends $Notifier<Map<VideoFilter, int>> {
   Map<VideoFilter, int> build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<Map<VideoFilter, int>, Map<VideoFilter, int>>;
     final element =
         ref.element
@@ -118,6 +118,6 @@ abstract class _$VideoFiltersState extends $Notifier<Map<VideoFilter, int>> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }

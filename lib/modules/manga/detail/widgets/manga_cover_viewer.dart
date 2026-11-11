@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:mangayomi/classic/file_picker_classic.dart'; // CLASSIC shim
 import 'package:flutter/material.dart';
 import 'package:shiori/shiori.dart';
 import 'package:mangayomi/eval/model/m_bridge.dart';
@@ -209,12 +210,7 @@ void showMangaCoverViewer(
                                     label: context.l10n.edit,
                                     icon: Symbols.image_rounded,
                                     onSelected: () async {
-                                      final file = await FilePicker.pickFile(
-                                        type: FileType.image,
-                                        linuxOptions: const LinuxOptions(
-                                          lockParentWindow: true,
-                                        ),
-                                      );
+                                      final file = await pickSingleFileClassic(type: FileType.image);
                                       if (file?.path != null &&
                                           context.mounted) {
                                         final bytes = File(file!.path!)

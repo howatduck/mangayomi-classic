@@ -57,8 +57,8 @@ class ChangedRows {
     required this.updates,
     required this.deleted,
     required this.settings,
-    required this._deletionActionsToClear,
-  });
+    required List<ActionType> deletionActionsToClear,
+  }) : _deletionActionsToClear = deletionActionsToClear; // CLASSIC
 
   /// Normal incremental sync: rows changed since `since`, every entity,
   /// plus pending local deletions.

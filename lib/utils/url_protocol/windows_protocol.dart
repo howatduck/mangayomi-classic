@@ -5,7 +5,8 @@ import 'package:win32_registry/win32_registry.dart';
 
 import 'protocol.dart';
 
-final _hive = CURRENT_USER;
+// CLASSIC: adapted to win32_registry 2.1 API (createKey/createValue/deleteKey).
+final _hive = Registry.currentUser;
 
 class WindowsProtocolHandler extends ProtocolHandler {
   @override
@@ -17,19 +18,19 @@ class WindowsProtocolHandler extends ProtocolHandler {
     final cmd =
         '${executable ?? Platform.resolvedExecutable} ${getArguments(arguments).map(_sanitize).join(' ')}';
 
-    final rootKey = _hive.create(prefix);
-    rootKey.setValue('', RegistryValue.string('URL:$capitalized'));
-    rootKey.setValue('URL Protocol', RegistryValue.string(''));
+    final rootKey = _hive.createKey(prefix);
+    rootKey.createValue(RegistryValue.string('', 'URL:$capitalized'));
+    rootKey.createValue(RegistryValue.string('URL Protocol', ''));
     rootKey
-        .create(r'shell\open\command')
-        .setValue('', RegistryValue.string(cmd));
+        .createKey(r'shell\open\command')
+        .createValue(RegistryValue.string('', cmd));
   }
 
   @override
   void unregister(String scheme) {
     if (defaultTargetPlatform != TargetPlatform.windows) return;
 
-    _hive.removeSubkey(_regPrefix(scheme));
+    _hive.deleteKey(_regPrefix(scheme));
   }
 
   String _regPrefix(String scheme) => r'SOFTWARE\Classes\$scheme';

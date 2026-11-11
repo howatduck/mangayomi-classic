@@ -82,7 +82,7 @@ class _OnboardingLocalFolderSectionState
     final path =
         await LocalDirectoryAccess.pickDirectory() ??
         await FilePicker.getDirectoryPath(
-          linuxOptions: const LinuxOptions(lockParentWindow: true),
+          lockParentWindow: true,
         );
     if (path == null || !mounted) return;
     final folders = ref.read(localFoldersStateProvider).toList();

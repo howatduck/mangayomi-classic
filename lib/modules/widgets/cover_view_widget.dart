@@ -148,7 +148,7 @@ class _CoverViewWidgetState extends State<CoverViewWidget> {
               duration: motion,
               curve: ShioriMotion.standardCurve,
               // Focus "pop" — the focused cover lifts slightly, TV-style.
-              transform: Matrix4.identity()..scaleByDouble(pop, pop, pop, 1),
+              transform: Matrix4.identity()..scale(pop, pop, pop),
               transformAlignment: Alignment.center,
               decoration: BoxDecoration(
                 // The ring sits outside the clip, its radius grown by its

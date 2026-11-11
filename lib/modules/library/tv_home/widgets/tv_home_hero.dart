@@ -389,12 +389,7 @@ class _HeroContinueButtonState extends State<_HeroContinueButton> {
           duration: ShioriMotion.fast,
           curve: Curves.easeOut,
           transform: Matrix4.identity()
-            ..scaleByDouble(
-              _focused ? 1.05 : 1.0,
-              _focused ? 1.05 : 1.0,
-              _focused ? 1.05 : 1.0,
-              1,
-            ),
+            ..scale(_focused ? 1.05 : 1.0, _focused ? 1.05 : 1.0, _focused ? 1.05 : 1.0),
           transformAlignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
           decoration: BoxDecoration(

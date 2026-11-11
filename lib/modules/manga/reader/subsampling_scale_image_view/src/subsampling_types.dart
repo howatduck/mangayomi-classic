@@ -25,8 +25,8 @@ class SubsamplingImageState {
   const SubsamplingImageState({
     required this.loadState,
     this.loadingProgress,
-    required this._reLoadCallback,
-  });
+    required VoidCallback reLoadCallback,
+  }) : _reLoadCallback = reLoadCallback; // CLASSIC
 
   /// Current loading state.
   final LoadState loadState;

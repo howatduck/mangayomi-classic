@@ -27,6 +27,7 @@
         android:icon="@mipmap/launcher_icon"
         android:banner="@drawable/tv_banner"
         android:usesCleartextTraffic="true">
+        <meta-data android:name="io.flutter.embedding.android.EnableImpeller" android:value="false" /> <!-- CLASSIC: Adreno 405 has no Vulkan; force Skia -->
         <activity
             android:name=".MainActivity"
             android:exported="true"

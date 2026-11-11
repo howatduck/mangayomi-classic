@@ -91,7 +91,7 @@ abstract class _$Tracks extends $Notifier<TrackPreference?> {
   TrackPreference? build({required int? syncId});
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<TrackPreference?, TrackPreference?>;
     final element =
         ref.element
@@ -101,7 +101,7 @@ abstract class _$Tracks extends $Notifier<TrackPreference?> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, () => build(syncId: _$args));
+    element.handleCreate(ref, () => build(syncId: _$args));
   }
 }
 
@@ -145,7 +145,7 @@ abstract class _$UpdateProgressAfterReadingState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -155,6 +155,6 @@ abstract class _$UpdateProgressAfterReadingState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }

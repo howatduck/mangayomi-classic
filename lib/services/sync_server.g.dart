@@ -84,7 +84,7 @@ abstract class _$SyncServer extends $Notifier<void> {
   void build({required int syncId});
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
@@ -94,6 +94,6 @@ abstract class _$SyncServer extends $Notifier<void> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, () => build(syncId: _$args));
+    element.handleCreate(ref, () => build(syncId: _$args));
   }
 }

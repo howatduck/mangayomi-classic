@@ -24,15 +24,15 @@ Future importArchivesFromFile(
 }) async {
   final keepAlile = ref.keepAlive();
   try {
-    List<PlatformFile> files = await FilePicker.pickFiles(
+    List<PlatformFile> files = (await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: switch (itemType) {
         ItemType.manga => ['cbz', 'zip'],
         ItemType.anime => ['mp4', 'mov', 'avi', 'flv', 'wmv', 'mpeg', 'mkv'],
         ItemType.novel => ['epub'],
       },
-      linuxOptions: const LinuxOptions(lockParentWindow: true),
-    );
+      lockParentWindow: true,
+    ))?.files ?? [];
     if (files.isNotEmpty) {
       final dateNow = DateTime.now().millisecondsSinceEpoch;
       final manga =

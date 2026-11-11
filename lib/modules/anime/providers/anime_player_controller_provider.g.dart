@@ -93,7 +93,7 @@ abstract class _$AnimeStreamController extends $Notifier<KeepAliveLink> {
   KeepAliveLink build({required Chapter episode});
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<KeepAliveLink, KeepAliveLink>;
     final element =
         ref.element
@@ -103,6 +103,6 @@ abstract class _$AnimeStreamController extends $Notifier<KeepAliveLink> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, () => build(episode: _$args));
+    element.handleCreate(ref, () => build(episode: _$args));
   }
 }

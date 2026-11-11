@@ -18,6 +18,10 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+// CLASSIC: Android 6.0 (API 23) target - a literal value would be
+// rewritten by the Flutter MinSdkVersionMigration, so route via ext.
+ext.classicMinSdkVersion = 23
+
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
@@ -42,6 +46,15 @@ android {
         jvmTarget = JavaVersion.VERSION_17
     }
 
+
+    // CLASSIC: okhttp multi-release jars duplicate OSGI manifests under AGP 8
+    packaging {
+        resources {
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+            excludes += "META-INF/versions/9/OSGI-INF/**"
+        }
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -52,7 +65,8 @@ android {
         applicationId "com.kodjodevf.mangayomi"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        // CLASSIC: via ext variable (see top) to bypass Flutter migration
+        minSdkVersion classicMinSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

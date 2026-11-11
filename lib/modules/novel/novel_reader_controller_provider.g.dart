@@ -87,7 +87,7 @@ abstract class _$NovelReaderController extends $Notifier<void> {
   void build({required Chapter chapter});
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
@@ -97,6 +97,6 @@ abstract class _$NovelReaderController extends $Notifier<void> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, () => build(chapter: _$args));
+    element.handleCreate(ref, () => build(chapter: _$args));
   }
 }

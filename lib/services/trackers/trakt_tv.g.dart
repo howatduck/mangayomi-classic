@@ -105,7 +105,7 @@ abstract class _$TraktTv extends $Notifier<void> {
   });
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
@@ -115,7 +115,7 @@ abstract class _$TraktTv extends $Notifier<void> {
               Object?,
               Object?
             >;
-    return element.handleCreate(
+    element.handleCreate(
       ref,
       () => build(
         syncId: _$args.syncId,

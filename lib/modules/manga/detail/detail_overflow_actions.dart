@@ -75,7 +75,7 @@ Future<void> handleDetailOverflowAction({
     case 5:
       try {
         final result = await FilePicker.getDirectoryPath(
-          linuxOptions: const LinuxOptions(lockParentWindow: true),
+          lockParentWindow: true,
         );
         if (result != null) {
           final headers = isLocalArchive
