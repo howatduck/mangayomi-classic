@@ -5,7 +5,7 @@ publish_to: "none"
 version: 0.9.97+130
 
 environment:
-  sdk: ^3.14.0
+  sdk: ^3.8.0
 
 dependencies:
   flutter:
@@ -76,7 +76,7 @@ dependencies:
   flutter_qjs:
     git:
       url: https://github.com/kodjodevf/flutter_qjs.git
-      ref: main
+      ref: f1e4993b631725f7611f80a3f0ba21eea127d945
   http: ^1.6.0
   re_editor: ^0.10.0
   re_highlight: ^0.0.3
@@ -108,12 +108,8 @@ dependencies:
   local_auth: ^3.0.1
   wakelock_plus: ^1.7.0
   m_extension_server:
-    git:
-      url: https://github.com/kodjodevf/m_extension_server.git
+    path: packages/m_extension_server
   flutter_tts: ^4.2.5
-  code_assets: ^2.0.0
-  hooks: ^2.2.0
-  native_toolchain_c: ^0.19.4
   cupertino_ui: ^1.1.6
   image: ^4.10.1
   flutter_foreground_task: ^9.2.2
@@ -121,35 +117,53 @@ dependencies:
   pretty_qr_code: ^3.6.0
 
 dependency_overrides:
+  material_ui:
+    path: packages/material_ui
+  cupertino_ui:
+    path: packages/cupertino_ui
+  analyzer: 8.1.1
+  flutter_web_auth_2: 5.1.0
+  app_links: 6.4.1
+  build_runner: 2.15.1
+  cupertino_icons: 1.0.8
+  d4rt: 0.2.4
+  desktop_webview_window: 0.3.2
+  device_info_plus: 12.4.0
+  external_path: 2.2.0
+  ffigen: 20.1.1
+  file_picker: 11.0.3
+  flex_color_scheme: 8.2.0
+  flutter_foreground_task: 9.2.2
+  flutter_riverpod: 3.3.2
+  flutter_rust_bridge: 2.12.0
+  font_awesome_flutter: 10.9.1
+  go_router: 17.0.0
+  google_fonts: 6.3.2
+  intl: 0.20.2
+  local_auth: 2.3.0
+  numberpicker: 0.1.0
+  package_info_plus: 9.0.1
+  path_provider: 2.1.5
+  riverpod_annotation: 4.0.3
+  share_plus: 12.0.2
+  url_launcher: 6.3.2
+  wakelock_plus: 1.4.0
+  win32: 5.15.0
+  win32_registry: 2.1.0
+  window_manager: 0.5.2
   protobuf: ^5.0.0
   ffi: ^2.1.3
   html: 0.15.6
-  package_info_plus:
-    git:
-      url: https://github.com/kodjodevf/plus_plugins.git
-      path: packages/package_info_plus/package_info_plus
-      ref: main
-  device_info_plus:
-    git:
-      url: https://github.com/kodjodevf/plus_plugins.git
-      path: packages/device_info_plus/device_info_plus
-      ref: main
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.16.0
-  riverpod_generator: ^4.0.9
   flutter_launcher_icons: ^0.14.3
-  isar_community_generator: ^3.4.1
   flutter_lints: ^6.0.0
-  freezed: ^4.0.3
   inno_bundle: ^0.12.0
   protoc_plugin: ^23.0.0
 
 flutter:
-  config:
-    enable-swift-package-manager: false
   uses-material-design: true
   generate: true
 

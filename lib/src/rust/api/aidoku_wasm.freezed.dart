@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'aidoku_wasm.dart';
@@ -9,7 +9,6 @@ part of 'aidoku_wasm.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -26,21 +25,16 @@ $AidokuFilterValueCopyWith<AidokuFilterValue> get copyWith => _$AidokuFilterValu
 
 @override
 bool operator ==(Object other) {
-  final _this = this as AidokuFilterValue;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue&&(identical(other.id, _this.id) || other.id == _this.id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue&&(identical(other.id, id) || other.id == id));
 }
 
 
 @override
-int get hashCode {
-  final _this = this as AidokuFilterValue;
-  return Object.hash(runtimeType,_this.id);
-}
+int get hashCode => Object.hash(runtimeType,id);
 
 @override
 String toString() {
-  final _this = this as AidokuFilterValue;
-  return 'AidokuFilterValue(id: ${_this.id})';
+  return 'AidokuFilterValue(id: $id)';
 }
 
 
@@ -252,18 +246,16 @@ $AidokuFilterValue_TextCopyWith<AidokuFilterValue_Text> get copyWith => _$Aidoku
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Text&&(identical(other.id, id) || other.id == id)&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Text&&(identical(other.id, id) || other.id == id)&&(identical(other.value, value) || other.value == value));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,id,value);
-}
+int get hashCode => Object.hash(runtimeType,id,value);
 
 @override
 String toString() {
-    return 'AidokuFilterValue.text(id: $id, value: $value)';
+  return 'AidokuFilterValue.text(id: $id, value: $value)';
 }
 
 
@@ -323,18 +315,16 @@ $AidokuFilterValue_SortCopyWith<AidokuFilterValue_Sort> get copyWith => _$Aidoku
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Sort&&(identical(other.id, id) || other.id == id)&&(identical(other.index, index) || other.index == index)&&(identical(other.ascending, ascending) || other.ascending == ascending));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Sort&&(identical(other.id, id) || other.id == id)&&(identical(other.index, index) || other.index == index)&&(identical(other.ascending, ascending) || other.ascending == ascending));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,id,index,ascending);
-}
+int get hashCode => Object.hash(runtimeType,id,index,ascending);
 
 @override
 String toString() {
-    return 'AidokuFilterValue.sort(id: $id, index: $index, ascending: $ascending)';
+  return 'AidokuFilterValue.sort(id: $id, index: $index, ascending: $ascending)';
 }
 
 
@@ -394,18 +384,16 @@ $AidokuFilterValue_CheckCopyWith<AidokuFilterValue_Check> get copyWith => _$Aido
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Check&&(identical(other.id, id) || other.id == id)&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Check&&(identical(other.id, id) || other.id == id)&&(identical(other.value, value) || other.value == value));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,id,value);
-}
+int get hashCode => Object.hash(runtimeType,id,value);
 
 @override
 String toString() {
-    return 'AidokuFilterValue.check(id: $id, value: $value)';
+  return 'AidokuFilterValue.check(id: $id, value: $value)';
 }
 
 
@@ -464,18 +452,16 @@ $AidokuFilterValue_SelectCopyWith<AidokuFilterValue_Select> get copyWith => _$Ai
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Select&&(identical(other.id, id) || other.id == id)&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Select&&(identical(other.id, id) || other.id == id)&&(identical(other.value, value) || other.value == value));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,id,value);
-}
+int get hashCode => Object.hash(runtimeType,id,value);
 
 @override
 String toString() {
-    return 'AidokuFilterValue.select(id: $id, value: $value)';
+  return 'AidokuFilterValue.select(id: $id, value: $value)';
 }
 
 
@@ -518,7 +504,7 @@ as String,
 
 
 class AidokuFilterValue_MultiSelect extends AidokuFilterValue {
-  const AidokuFilterValue_MultiSelect({required this.id, required  List<String> included, required  List<String> excluded}): _included = included,_excluded = excluded,super._();
+  const AidokuFilterValue_MultiSelect({required this.id, required final  List<String> included, required final  List<String> excluded}): _included = included,_excluded = excluded,super._();
   
 
 @override final  String id;
@@ -547,18 +533,16 @@ $AidokuFilterValue_MultiSelectCopyWith<AidokuFilterValue_MultiSelect> get copyWi
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_MultiSelect&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.included, _included)&&const DeepCollectionEquality().equals(other.excluded, _excluded));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_MultiSelect&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._included, _included)&&const DeepCollectionEquality().equals(other._excluded, _excluded));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_included),const DeepCollectionEquality().hash(_excluded));
-}
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_included),const DeepCollectionEquality().hash(_excluded));
 
 @override
 String toString() {
-    return 'AidokuFilterValue.multiSelect(id: $id, included: $included, excluded: $excluded)';
+  return 'AidokuFilterValue.multiSelect(id: $id, included: $included, excluded: $excluded)';
 }
 
 
@@ -619,18 +603,16 @@ $AidokuFilterValue_RangeCopyWith<AidokuFilterValue_Range> get copyWith => _$Aido
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Range&&(identical(other.id, id) || other.id == id)&&(identical(other.from, from) || other.from == from)&&(identical(other.to, to) || other.to == to));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuFilterValue_Range&&(identical(other.id, id) || other.id == id)&&(identical(other.from, from) || other.from == from)&&(identical(other.to, to) || other.to == to));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,id,from,to);
-}
+int get hashCode => Object.hash(runtimeType,id,from,to);
 
 @override
 String toString() {
-    return 'AidokuFilterValue.range(id: $id, from: $from, to: $to)';
+  return 'AidokuFilterValue.range(id: $id, from: $from, to: $to)';
 }
 
 
@@ -679,7 +661,7 @@ mixin _$AidokuPage {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage);
 }
 
 
@@ -688,7 +670,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'AidokuPage()';
+  return 'AidokuPage()';
 }
 
 
@@ -784,7 +766,7 @@ return zipFile(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String url,  List<(String, String,)> context)?  url,TResult Function( String field0)?  text,TResult Function( Uint8List? data)?  image,TResult Function( String url,  String filePath)?  zipFile,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String url,  List<(String, String)> context)?  url,TResult Function( String field0)?  text,TResult Function( Uint8List? data)?  image,TResult Function( String url,  String filePath)?  zipFile,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case AidokuPage_Url() when url != null:
 return url(_that.url,_that.context);case AidokuPage_Text() when text != null:
@@ -808,7 +790,7 @@ return zipFile(_that.url,_that.filePath);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String url,  List<(String, String,)> context)  url,required TResult Function( String field0)  text,required TResult Function( Uint8List? data)  image,required TResult Function( String url,  String filePath)  zipFile,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String url,  List<(String, String)> context)  url,required TResult Function( String field0)  text,required TResult Function( Uint8List? data)  image,required TResult Function( String url,  String filePath)  zipFile,}) {final _that = this;
 switch (_that) {
 case AidokuPage_Url():
 return url(_that.url,_that.context);case AidokuPage_Text():
@@ -828,7 +810,7 @@ return zipFile(_that.url,_that.filePath);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String url,  List<(String, String,)> context)?  url,TResult? Function( String field0)?  text,TResult? Function( Uint8List? data)?  image,TResult? Function( String url,  String filePath)?  zipFile,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String url,  List<(String, String)> context)?  url,TResult? Function( String field0)?  text,TResult? Function( Uint8List? data)?  image,TResult? Function( String url,  String filePath)?  zipFile,}) {final _that = this;
 switch (_that) {
 case AidokuPage_Url() when url != null:
 return url(_that.url,_that.context);case AidokuPage_Text() when text != null:
@@ -846,12 +828,12 @@ return zipFile(_that.url,_that.filePath);case _:
 
 
 class AidokuPage_Url extends AidokuPage {
-  const AidokuPage_Url({required this.url, required  List<(String, String,)> context}): _context = context,super._();
+  const AidokuPage_Url({required this.url, required final  List<(String, String)> context}): _context = context,super._();
   
 
  final  String url;
- final  List<(String, String,)> _context;
- List<(String, String,)> get context {
+ final  List<(String, String)> _context;
+ List<(String, String)> get context {
   if (_context is EqualUnmodifiableListView) return _context;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_context);
@@ -868,18 +850,16 @@ $AidokuPage_UrlCopyWith<AidokuPage_Url> get copyWith => _$AidokuPage_UrlCopyWith
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage_Url&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other.context, _context));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage_Url&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other._context, _context));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,url,const DeepCollectionEquality().hash(_context));
-}
+int get hashCode => Object.hash(runtimeType,url,const DeepCollectionEquality().hash(_context));
 
 @override
 String toString() {
-    return 'AidokuPage.url(url: $url, context: $context)';
+  return 'AidokuPage.url(url: $url, context: $context)';
 }
 
 
@@ -890,7 +870,7 @@ abstract mixin class $AidokuPage_UrlCopyWith<$Res> implements $AidokuPageCopyWit
   factory $AidokuPage_UrlCopyWith(AidokuPage_Url value, $Res Function(AidokuPage_Url) _then) = _$AidokuPage_UrlCopyWithImpl;
 @useResult
 $Res call({
- String url, List<(String, String,)> context
+ String url, List<(String, String)> context
 });
 
 
@@ -911,7 +891,7 @@ class _$AidokuPage_UrlCopyWithImpl<$Res>
   return _then(AidokuPage_Url(
 url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,context: null == context ? _self._context : context // ignore: cast_nullable_to_non_nullable
-as List<(String, String,)>,
+as List<(String, String)>,
   ));
 }
 
@@ -937,18 +917,16 @@ $AidokuPage_TextCopyWith<AidokuPage_Text> get copyWith => _$AidokuPage_TextCopyW
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage_Text&&(identical(other.field0, field0) || other.field0 == field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage_Text&&(identical(other.field0, field0) || other.field0 == field0));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,field0);
-}
+int get hashCode => Object.hash(runtimeType,field0);
 
 @override
 String toString() {
-    return 'AidokuPage.text(field0: $field0)';
+  return 'AidokuPage.text(field0: $field0)';
 }
 
 
@@ -1005,18 +983,16 @@ $AidokuPage_ImageCopyWith<AidokuPage_Image> get copyWith => _$AidokuPage_ImageCo
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage_Image&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage_Image&&const DeepCollectionEquality().equals(other.data, data));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
-}
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
 
 @override
 String toString() {
-    return 'AidokuPage.image(data: $data)';
+  return 'AidokuPage.image(data: $data)';
 }
 
 
@@ -1074,18 +1050,16 @@ $AidokuPage_ZipFileCopyWith<AidokuPage_ZipFile> get copyWith => _$AidokuPage_Zip
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage_ZipFile&&(identical(other.url, url) || other.url == url)&&(identical(other.filePath, filePath) || other.filePath == filePath));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AidokuPage_ZipFile&&(identical(other.url, url) || other.url == url)&&(identical(other.filePath, filePath) || other.filePath == filePath));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,url,filePath);
-}
+int get hashCode => Object.hash(runtimeType,url,filePath);
 
 @override
 String toString() {
-    return 'AidokuPage.zipFile(url: $url, filePath: $filePath)';
+  return 'AidokuPage.zipFile(url: $url, filePath: $filePath)';
 }
 
 

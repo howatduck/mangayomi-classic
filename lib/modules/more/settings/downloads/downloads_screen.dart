@@ -197,7 +197,7 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
   Future<String?> _pickDirectory() async =>
       await LocalDirectoryAccess.pickDirectory() ??
       await FilePicker.getDirectoryPath(
-        linuxOptions: const LinuxOptions(lockParentWindow: true),
+        lockParentWindow: true,
       );
 
   Future<void> _addLocalFolder(List<LocalFolder> localFolders) async {

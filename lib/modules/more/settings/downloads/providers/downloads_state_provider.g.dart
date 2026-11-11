@@ -47,7 +47,7 @@ abstract class _$OnlyOnWifiState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -57,7 +57,7 @@ abstract class _$OnlyOnWifiState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -100,7 +100,7 @@ abstract class _$SaveAsCBZArchiveState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -110,7 +110,7 @@ abstract class _$SaveAsCBZArchiveState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -154,7 +154,7 @@ abstract class _$DeleteDownloadAfterReadingState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -164,7 +164,7 @@ abstract class _$DeleteDownloadAfterReadingState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -207,7 +207,7 @@ abstract class _$DownloadLocationState extends $Notifier<(String, String)> {
   (String, String) build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<(String, String), (String, String)>;
     final element =
         ref.element
@@ -217,7 +217,7 @@ abstract class _$DownloadLocationState extends $Notifier<(String, String)> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -260,7 +260,7 @@ abstract class _$ConcurrentDownloadsState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -270,7 +270,7 @@ abstract class _$ConcurrentDownloadsState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -314,7 +314,7 @@ abstract class _$AllowConcurrentDownloadsState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -324,7 +324,7 @@ abstract class _$AllowConcurrentDownloadsState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -368,7 +368,7 @@ abstract class _$AskDownloadDestinationState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -378,7 +378,7 @@ abstract class _$AskDownloadDestinationState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -421,7 +421,7 @@ abstract class _$DownloadDelaySecondsState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -431,7 +431,7 @@ abstract class _$DownloadDelaySecondsState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -474,7 +474,7 @@ abstract class _$DownloadNewChaptersState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -484,7 +484,7 @@ abstract class _$DownloadNewChaptersState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -531,7 +531,7 @@ abstract class _$DownloadNewChaptersCategoriesState
   List<int> build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<List<int>, List<int>>;
     final element =
         ref.element
@@ -541,7 +541,7 @@ abstract class _$DownloadNewChaptersCategoriesState
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -592,7 +592,7 @@ abstract class _$DownloadNewChaptersExcludedCategoriesState
   List<int> build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<List<int>, List<int>>;
     final element =
         ref.element
@@ -602,7 +602,7 @@ abstract class _$DownloadNewChaptersExcludedCategoriesState
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -646,7 +646,7 @@ abstract class _$DownloadAheadWhileReadingState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -656,7 +656,7 @@ abstract class _$DownloadAheadWhileReadingState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -700,7 +700,7 @@ abstract class _$DeleteAfterReadingSlotState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -710,7 +710,7 @@ abstract class _$DeleteAfterReadingSlotState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -756,7 +756,7 @@ abstract class _$DeleteBookmarkedAfterReadingState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -766,6 +766,6 @@ abstract class _$DeleteBookmarkedAfterReadingState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }

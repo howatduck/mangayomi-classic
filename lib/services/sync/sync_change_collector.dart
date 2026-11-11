@@ -67,9 +67,9 @@ class ChangedRows {
     required this.updates,
     required this.deleted,
     required this.settings,
-    required this._deletionActionsToClear,
+    required List<ActionType> deletionActionsToClear,
     required this.unsent,
-  });
+  }) : _deletionActionsToClear = deletionActionsToClear; // CLASSIC
 
   /// The rows made to fit what the other end takes (see [fitSyncRow]). A
   /// row that cannot fit is left out and listed in [unsent]: one such row

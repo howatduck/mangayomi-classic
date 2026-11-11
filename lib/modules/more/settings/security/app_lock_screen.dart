@@ -29,10 +29,10 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _authenticate());
   }
 
+  // CLASSIC: local_auth 2.3 API (dependency_overrides pins 2.3.0).
   Future<bool> _deviceAuthenticate(String reason) => _localAuth.authenticate(
     localizedReason: reason,
-    biometricOnly: false,
-    persistAcrossBackgrounding: true,
+    options: const AuthenticationOptions(biometricOnly: false, stickyAuth: true),
   );
 
   Future<void> _authenticate() async {
@@ -49,7 +49,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
     } catch (error, stack) {
       // No way to authenticate, or a prompt already up: the button stays
       // for another try, and the reason is kept.
-      recordError(error, stack: stack, source: 'app_lock');
+      recordError(error, stack: stack, source: app_lock);
     } finally {
       if (mounted) {
         setState(() => _isAuthenticating = false);

@@ -63,7 +63,7 @@ abstract class _$TrackerSync extends $Notifier<void> {
   void build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
@@ -73,7 +73,7 @@ abstract class _$TrackerSync extends $Notifier<void> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 
@@ -173,7 +173,7 @@ abstract class _$TrackState extends $Notifier<Track> {
   });
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<Track, Track>;
     final element =
         ref.element
@@ -183,7 +183,7 @@ abstract class _$TrackState extends $Notifier<Track> {
               Object?,
               Object?
             >;
-    return element.handleCreate(
+    element.handleCreate(
       ref,
       () => build(
         track: _$args.track,
@@ -235,7 +235,7 @@ abstract class _$LastTrackerLibraryLocationState
   (int, bool) build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<(int, bool), (int, bool)>;
     final element =
         ref.element
@@ -245,6 +245,6 @@ abstract class _$LastTrackerLibraryLocationState
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }

@@ -123,7 +123,7 @@ class DataAndStorage extends ConsumerWidget {
                       : autoBackupLocation.$2,
                   onTap: () async {
                     final result = await FilePicker.getDirectoryPath(
-                      linuxOptions: const LinuxOptions(lockParentWindow: true),
+                      lockParentWindow: true,
                     );
                     if (result != null) {
                       ref
@@ -242,7 +242,7 @@ class DataAndStorage extends ConsumerWidget {
       return;
     }
     final result = await FilePicker.getDirectoryPath(
-      linuxOptions: const LinuxOptions(lockParentWindow: true),
+      lockParentWindow: true,
     );
     if (result != null) {
       ref.read(downloadLocationStateProvider.notifier).set(result);

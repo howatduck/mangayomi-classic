@@ -295,7 +295,7 @@ class _WatchOrderScreenState extends State<WatchOrderScreen> {
                     Text(label, style: context.shiori.caption),
                     const SizedBox(height: ShioriSpace.s8),
                     DropdownButtonFormField<String>(
-                      initialValue: value.selectedOptionKey,
+                      value: value.selectedOptionKey, // CLASSIC
                       isExpanded: true,
                       decoration: InputDecoration(
                         labelText: context.l10n.watch_order_select_source,

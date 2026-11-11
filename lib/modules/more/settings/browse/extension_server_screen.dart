@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:mangayomi/classic/file_picker_classic.dart'; // CLASSIC shim
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mangayomi/eval/model/m_bridge.dart';
 import 'package:mangayomi/modules/more/settings/browse/extension_server/extension_server_release.dart';
@@ -302,7 +304,7 @@ class _ExtensionServerScreenState extends ConsumerState<ExtensionServerScreen> {
     final selectedDirectory = await FilePicker.getDirectoryPath(
       dialogTitle: l10n.select_extension_server_folder,
       initialDirectory: initialDirectory,
-      linuxOptions: const LinuxOptions(lockParentWindow: true),
+      lockParentWindow: true,
     );
     if (!mounted || selectedDirectory == null || selectedDirectory.isEmpty) {
       return;
@@ -588,7 +590,7 @@ class _ExtensionServerScreenState extends ConsumerState<ExtensionServerScreen> {
   }
 
   Future<File?> _pickIosJarFile(dynamic l10n) async {
-    final file = await FilePicker.pickFile(
+    final file = await pickSingleFileClassic(
       dialogTitle: l10n.select_extension_server_jar,
       type: FileType.custom,
       allowedExtensions: const ['jar'],

@@ -215,7 +215,8 @@ void main() {
     expect(find.text('Anime'), findsNothing);
     expect(
       tester.getSemantics(find.bySemanticsLabel('Anime')),
-      isSemantics(
+      matchesSemantics( // CLASSIC: Flutter 3.32 matcher name
+        
         label: 'Anime',
         isSelected: true,
         isButton: true,
@@ -224,7 +225,8 @@ void main() {
     );
     expect(
       tester.getSemantics(find.bySemanticsLabel('Browse')),
-      isSemantics(
+      matchesSemantics( // CLASSIC: Flutter 3.32 matcher name
+        
         label: 'Browse',
         isSelected: false,
         isButton: true,

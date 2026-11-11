@@ -46,7 +46,7 @@ abstract class _$AniSkip extends $Notifier<void> {
   void build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
@@ -56,6 +56,6 @@ abstract class _$AniSkip extends $Notifier<void> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }

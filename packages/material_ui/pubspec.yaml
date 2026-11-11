@@ -1,0 +1,12 @@
+name: material_ui
+description: Classic shim - re-exports the Flutter SDK built-in Material library.
+version: 1.11.0
+publish_to: "none"
+environment:
+  sdk: ^3.8.0
+  flutter: ">=3.32.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter

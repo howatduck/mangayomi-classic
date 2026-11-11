@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'http.dart';
@@ -9,7 +9,6 @@ part of 'http.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -21,21 +20,16 @@ mixin _$HttpHeaders {
 
 @override
 bool operator ==(Object other) {
-  final _this = this as HttpHeaders;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpHeaders&&const DeepCollectionEquality().equals(other.field0, _this.field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpHeaders&&const DeepCollectionEquality().equals(other.field0, field0));
 }
 
 
 @override
-int get hashCode {
-  final _this = this as HttpHeaders;
-  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.field0));
-}
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(field0));
 
 @override
 String toString() {
-  final _this = this as HttpHeaders;
-  return 'HttpHeaders(field0: ${_this.field0})';
+  return 'HttpHeaders(field0: $field0)';
 }
 
 
@@ -125,7 +119,7 @@ return list(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Map<String, String> field0)?  map,TResult Function( List<(String, String,)> field0)?  list,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Map<String, String> field0)?  map,TResult Function( List<(String, String)> field0)?  list,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case HttpHeaders_Map() when map != null:
 return map(_that.field0);case HttpHeaders_List() when list != null:
@@ -147,7 +141,7 @@ return list(_that.field0);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Map<String, String> field0)  map,required TResult Function( List<(String, String,)> field0)  list,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Map<String, String> field0)  map,required TResult Function( List<(String, String)> field0)  list,}) {final _that = this;
 switch (_that) {
 case HttpHeaders_Map():
 return map(_that.field0);case HttpHeaders_List():
@@ -165,7 +159,7 @@ return list(_that.field0);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Map<String, String> field0)?  map,TResult? Function( List<(String, String,)> field0)?  list,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Map<String, String> field0)?  map,TResult? Function( List<(String, String)> field0)?  list,}) {final _that = this;
 switch (_that) {
 case HttpHeaders_Map() when map != null:
 return map(_that.field0);case HttpHeaders_List() when list != null:
@@ -181,7 +175,7 @@ return list(_that.field0);case _:
 
 
 class HttpHeaders_Map extends HttpHeaders {
-  const HttpHeaders_Map( Map<String, String> field0): _field0 = field0,super._();
+  const HttpHeaders_Map(final  Map<String, String> field0): _field0 = field0,super._();
   
 
  final  Map<String, String> _field0;
@@ -202,18 +196,16 @@ $HttpHeaders_MapCopyWith<HttpHeaders_Map> get copyWith => _$HttpHeaders_MapCopyW
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpHeaders_Map&&const DeepCollectionEquality().equals(other.field0, _field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpHeaders_Map&&const DeepCollectionEquality().equals(other._field0, _field0));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_field0));
-}
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_field0));
 
 @override
 String toString() {
-    return 'HttpHeaders.map(field0: $field0)';
+  return 'HttpHeaders.map(field0: $field0)';
 }
 
 
@@ -255,11 +247,11 @@ as Map<String, String>,
 
 
 class HttpHeaders_List extends HttpHeaders {
-  const HttpHeaders_List( List<(String, String,)> field0): _field0 = field0,super._();
+  const HttpHeaders_List(final  List<(String, String)> field0): _field0 = field0,super._();
   
 
- final  List<(String, String,)> _field0;
-@override List<(String, String,)> get field0 {
+ final  List<(String, String)> _field0;
+@override List<(String, String)> get field0 {
   if (_field0 is EqualUnmodifiableListView) return _field0;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_field0);
@@ -276,18 +268,16 @@ $HttpHeaders_ListCopyWith<HttpHeaders_List> get copyWith => _$HttpHeaders_ListCo
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpHeaders_List&&const DeepCollectionEquality().equals(other.field0, _field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpHeaders_List&&const DeepCollectionEquality().equals(other._field0, _field0));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_field0));
-}
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_field0));
 
 @override
 String toString() {
-    return 'HttpHeaders.list(field0: $field0)';
+  return 'HttpHeaders.list(field0: $field0)';
 }
 
 
@@ -298,7 +288,7 @@ abstract mixin class $HttpHeaders_ListCopyWith<$Res> implements $HttpHeadersCopy
   factory $HttpHeaders_ListCopyWith(HttpHeaders_List value, $Res Function(HttpHeaders_List) _then) = _$HttpHeaders_ListCopyWithImpl;
 @useResult
 $Res call({
- List<(String, String,)> field0
+ List<(String, String)> field0
 });
 
 
@@ -318,7 +308,7 @@ class _$HttpHeaders_ListCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? field0 = null,}) {
   return _then(HttpHeaders_List(
 null == field0 ? _self._field0 : field0 // ignore: cast_nullable_to_non_nullable
-as List<(String, String,)>,
+as List<(String, String)>,
   ));
 }
 
@@ -334,7 +324,7 @@ mixin _$HttpResponseBody {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpResponseBody);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpResponseBody);
 }
 
 
@@ -343,7 +333,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'HttpResponseBody()';
+  return 'HttpResponseBody()';
 }
 
 
@@ -510,18 +500,16 @@ $HttpResponseBody_TextCopyWith<HttpResponseBody_Text> get copyWith => _$HttpResp
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpResponseBody_Text&&(identical(other.field0, field0) || other.field0 == field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpResponseBody_Text&&(identical(other.field0, field0) || other.field0 == field0));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,field0);
-}
+int get hashCode => Object.hash(runtimeType,field0);
 
 @override
 String toString() {
-    return 'HttpResponseBody.text(field0: $field0)';
+  return 'HttpResponseBody.text(field0: $field0)';
 }
 
 
@@ -578,18 +566,16 @@ $HttpResponseBody_BytesCopyWith<HttpResponseBody_Bytes> get copyWith => _$HttpRe
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpResponseBody_Bytes&&const DeepCollectionEquality().equals(other.field0, field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpResponseBody_Bytes&&const DeepCollectionEquality().equals(other.field0, field0));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,const DeepCollectionEquality().hash(field0));
-}
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(field0));
 
 @override
 String toString() {
-    return 'HttpResponseBody.bytes(field0: $field0)';
+  return 'HttpResponseBody.bytes(field0: $field0)';
 }
 
 
@@ -641,7 +627,7 @@ class HttpResponseBody_Stream extends HttpResponseBody {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpResponseBody_Stream);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HttpResponseBody_Stream);
 }
 
 
@@ -650,7 +636,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'HttpResponseBody.stream()';
+  return 'HttpResponseBody.stream()';
 }
 
 
