@@ -68,6 +68,27 @@ apksigner sign --ks <keystore> mangayomi-classic-aligned.apk
 
 On devices with kernel ≥ 3.16 the unpatched APK works as-is.
 
+## The reader image decoder (Android < 11)
+
+The bundled subsampling decoder (`lib/ffi/image_decoder.cpp`) decodes page
+images with the NDK `AImageDecoder` API, which only exists on Android 11
+(API 30) and above; upstream Mangayomi therefore shows an error card for
+every reader page on older Android versions. Classic adds a software
+fallback in `ffi_image_decoder.dart`: when the native decoder fails to
+initialise, image dimensions are parsed from the file header in Dart
+(JPEG / PNG / WebP / GIF / BMP) and regions are decoded with the dart:ui
+codec into the same caller-owned RGBA buffer contract the native path
+uses. Border auto-crop is skipped on the fallback path.
+
+The native library also links `libc++_shared.so`, which the downgrade
+toolchain does not package into the APK; release builds inject the NDK's
+copy into `lib/<abi>/` before zipalign/signing.
+
+Separately, bundled ISRG root certificates (`assets/certs/`) are
+registered at startup because Android 6's trust store predates the ISRG
+roots that current Let's Encrypt chains lead to, and the HTTP layer is
+pinned to the Dart client so those roots apply to source traffic.
+
 ## Building
 
 Either dispatch the **Mangayomi Classic Build** GitHub Actions workflow, or
@@ -93,3 +114,6 @@ on armv7 the stock libmdbx gate still requires kernel 3.16+.
 The patched release APK was installed on the reference tablet: the app
 boots to its UI, Isar opens (library scan runs), and no startup error is
 shown. Performance on Snapdragon 617 / 3 GB is usable but heavy.
+
+Reader verification (2026-11-12): with the fallback in place, downloaded
+and online chapters render in the reader on the reference tablet.
