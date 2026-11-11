@@ -665,6 +665,7 @@ final ffiImageDecoder = FfiImageDecoder();
 
 // ---------------------------------------------------------------------------
 // CLASSIC PATCH helpers: software fallback for devices without AImageDecoder
+// Upstream issue: kodjodevf/mangayomi#1151
 // (Android < 11). The bundled native decoder loads its AImageDecoder symbols
 // at init time and fails on every file there, so dimensions are parsed from
 // the image header and regions are decoded with the dart:ui codec instead.

@@ -117,3 +117,5 @@ shown. Performance on Snapdragon 617 / 3 GB is usable but heavy.
 
 Reader verification (2026-11-12): with the fallback in place, downloaded
 and online chapters render in the reader on the reference tablet.
+
+- Reader software fallback (AImageDecoder): upstream issue kodjodevf/mangayomi#1151
