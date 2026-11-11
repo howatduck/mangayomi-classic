@@ -138,7 +138,7 @@ abstract class _$ActiveHistoryItemTypeState extends $Notifier<ItemType> {
   ItemType build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<ItemType, ItemType>;
     final element =
         ref.element
@@ -148,7 +148,7 @@ abstract class _$ActiveHistoryItemTypeState extends $Notifier<ItemType> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }
 

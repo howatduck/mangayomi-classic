@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:mangayomi/classic/file_picker_classic.dart'; // CLASSIC shim
+import 'package:flutter/material.dart';
 import 'package:shiori/shiori.dart';
 import 'package:mangayomi/eval/model/m_bridge.dart';
 import 'package:mangayomi/models/chapter.dart';
@@ -212,9 +214,7 @@ class _SubtitleSectionWidgetState extends State<SubtitleSectionWidget> {
             icon: Symbols.file_open_rounded,
             onTap: () async {
               try {
-                final file = await FilePicker.pickFile(
-                  linuxOptions: const LinuxOptions(lockParentWindow: true),
-                );
+                final file = await pickSingleFileClassic();
 
                 if (file != null && context.mounted) {
                   final track = SubtitleTrack.uri(file.path!);

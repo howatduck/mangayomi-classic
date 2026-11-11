@@ -1,5 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:mangayomi/classic/file_picker_classic.dart'; // CLASSIC shim
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mangayomi/eval/model/m_bridge.dart';
 import 'package:mangayomi/models/manga.dart';
@@ -32,9 +34,7 @@ import 'package:shiori/shiori.dart';
 Future<bool> performRestore(BuildContext context, WidgetRef ref) async {
   String? safetyBackupPath;
   try {
-    final file = await FilePicker.pickFile(
-      linuxOptions: const LinuxOptions(lockParentWindow: true),
-    );
+    final file = await pickSingleFileClassic();
     if (file?.path == null || !context.mounted) return false;
     final path = file!.path!;
     // A successful restore pushes to the sync server automatically, so a

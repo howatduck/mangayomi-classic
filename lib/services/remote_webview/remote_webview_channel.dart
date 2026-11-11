@@ -27,7 +27,7 @@ class RemoteWebViewException implements Exception {
 /// - `{"type":"res","id":1,"result":...}` or `{"type":"res","id":1,"error":"..."}`
 /// - `{"type":"evt","method":"pageFinished","params":{...}}` expects nothing.
 class RemoteWebViewChannel {
-  RemoteWebViewChannel({required this._send});
+  RemoteWebViewChannel({required void Function(String) send}) : _send = send; // CLASSIC
 
   final void Function(String) _send;
   final _pending = <int, Completer<Object?>>{};

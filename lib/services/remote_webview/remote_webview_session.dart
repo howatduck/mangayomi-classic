@@ -21,9 +21,9 @@ import 'package:mangayomi/utils/log/log.dart';
 class RemoteWebViewSession {
   RemoteWebViewSession({
     required this.id,
-    required this._channel,
+    required RemoteWebViewChannel channel,
     this.onClosed,
-  });
+  }) : _channel = channel; // CLASSIC
 
   final String id;
   final RemoteWebViewChannel _channel;

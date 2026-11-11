@@ -90,7 +90,8 @@ class _CustomButtonScreenState extends ConsumerState<CustomButtonScreen> {
                 ),
               );
             },
-            onReorderItem: (oldIndex, newIndex) async {
+            onReorder: (oldIndex, newIndexRaw) async { // CLASSIC: Flutter 3.32 onReorder semantics
+              final newIndex = newIndexRaw > oldIndex ? newIndexRaw - 1 : newIndexRaw;
               if (oldIndex < newIndex) {
                 final draggedItemPos = data[oldIndex].pos;
                 for (var i = oldIndex; i < newIndex - 1; i++) {

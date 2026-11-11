@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'error.dart';
@@ -9,7 +9,6 @@ part of 'error.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -21,7 +20,7 @@ mixin _$RhttpError {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError);
 }
 
 
@@ -30,7 +29,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'RhttpError()';
+  return 'RhttpError()';
 }
 
 
@@ -135,7 +134,7 @@ return rhttpUnknownError(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  rhttpCancelError,TResult Function()?  rhttpTimeoutError,TResult Function()?  rhttpRedirectError,TResult Function( int field0,  List<(String, String,)> field1,  HttpResponseBody field2)?  rhttpStatusCodeError,TResult Function( String field0)?  rhttpInvalidCertificateError,TResult Function( String field0)?  rhttpConnectionError,TResult Function( String field0)?  rhttpUnknownError,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  rhttpCancelError,TResult Function()?  rhttpTimeoutError,TResult Function()?  rhttpRedirectError,TResult Function( int field0,  List<(String, String)> field1,  HttpResponseBody field2)?  rhttpStatusCodeError,TResult Function( String field0)?  rhttpInvalidCertificateError,TResult Function( String field0)?  rhttpConnectionError,TResult Function( String field0)?  rhttpUnknownError,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case RhttpError_RhttpCancelError() when rhttpCancelError != null:
 return rhttpCancelError();case RhttpError_RhttpTimeoutError() when rhttpTimeoutError != null:
@@ -162,7 +161,7 @@ return rhttpUnknownError(_that.field0);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  rhttpCancelError,required TResult Function()  rhttpTimeoutError,required TResult Function()  rhttpRedirectError,required TResult Function( int field0,  List<(String, String,)> field1,  HttpResponseBody field2)  rhttpStatusCodeError,required TResult Function( String field0)  rhttpInvalidCertificateError,required TResult Function( String field0)  rhttpConnectionError,required TResult Function( String field0)  rhttpUnknownError,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  rhttpCancelError,required TResult Function()  rhttpTimeoutError,required TResult Function()  rhttpRedirectError,required TResult Function( int field0,  List<(String, String)> field1,  HttpResponseBody field2)  rhttpStatusCodeError,required TResult Function( String field0)  rhttpInvalidCertificateError,required TResult Function( String field0)  rhttpConnectionError,required TResult Function( String field0)  rhttpUnknownError,}) {final _that = this;
 switch (_that) {
 case RhttpError_RhttpCancelError():
 return rhttpCancelError();case RhttpError_RhttpTimeoutError():
@@ -185,7 +184,7 @@ return rhttpUnknownError(_that.field0);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  rhttpCancelError,TResult? Function()?  rhttpTimeoutError,TResult? Function()?  rhttpRedirectError,TResult? Function( int field0,  List<(String, String,)> field1,  HttpResponseBody field2)?  rhttpStatusCodeError,TResult? Function( String field0)?  rhttpInvalidCertificateError,TResult? Function( String field0)?  rhttpConnectionError,TResult? Function( String field0)?  rhttpUnknownError,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  rhttpCancelError,TResult? Function()?  rhttpTimeoutError,TResult? Function()?  rhttpRedirectError,TResult? Function( int field0,  List<(String, String)> field1,  HttpResponseBody field2)?  rhttpStatusCodeError,TResult? Function( String field0)?  rhttpInvalidCertificateError,TResult? Function( String field0)?  rhttpConnectionError,TResult? Function( String field0)?  rhttpUnknownError,}) {final _that = this;
 switch (_that) {
 case RhttpError_RhttpCancelError() when rhttpCancelError != null:
 return rhttpCancelError();case RhttpError_RhttpTimeoutError() when rhttpTimeoutError != null:
@@ -216,7 +215,7 @@ class RhttpError_RhttpCancelError extends RhttpError {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpCancelError);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpCancelError);
 }
 
 
@@ -225,7 +224,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'RhttpError.rhttpCancelError()';
+  return 'RhttpError.rhttpCancelError()';
 }
 
 
@@ -248,7 +247,7 @@ class RhttpError_RhttpTimeoutError extends RhttpError {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpTimeoutError);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpTimeoutError);
 }
 
 
@@ -257,7 +256,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'RhttpError.rhttpTimeoutError()';
+  return 'RhttpError.rhttpTimeoutError()';
 }
 
 
@@ -280,7 +279,7 @@ class RhttpError_RhttpRedirectError extends RhttpError {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpRedirectError);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpRedirectError);
 }
 
 
@@ -289,7 +288,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'RhttpError.rhttpRedirectError()';
+  return 'RhttpError.rhttpRedirectError()';
 }
 
 
@@ -302,12 +301,12 @@ String toString() {
 
 
 class RhttpError_RhttpStatusCodeError extends RhttpError {
-  const RhttpError_RhttpStatusCodeError(this.field0,  List<(String, String,)> field1, this.field2): _field1 = field1,super._();
+  const RhttpError_RhttpStatusCodeError(this.field0, final  List<(String, String)> field1, this.field2): _field1 = field1,super._();
   
 
  final  int field0;
- final  List<(String, String,)> _field1;
- List<(String, String,)> get field1 {
+ final  List<(String, String)> _field1;
+ List<(String, String)> get field1 {
   if (_field1 is EqualUnmodifiableListView) return _field1;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_field1);
@@ -325,18 +324,16 @@ $RhttpError_RhttpStatusCodeErrorCopyWith<RhttpError_RhttpStatusCodeError> get co
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpStatusCodeError&&(identical(other.field0, field0) || other.field0 == field0)&&const DeepCollectionEquality().equals(other.field1, _field1)&&(identical(other.field2, field2) || other.field2 == field2));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpStatusCodeError&&(identical(other.field0, field0) || other.field0 == field0)&&const DeepCollectionEquality().equals(other._field1, _field1)&&(identical(other.field2, field2) || other.field2 == field2));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,field0,const DeepCollectionEquality().hash(_field1),field2);
-}
+int get hashCode => Object.hash(runtimeType,field0,const DeepCollectionEquality().hash(_field1),field2);
 
 @override
 String toString() {
-    return 'RhttpError.rhttpStatusCodeError(field0: $field0, field1: $field1, field2: $field2)';
+  return 'RhttpError.rhttpStatusCodeError(field0: $field0, field1: $field1, field2: $field2)';
 }
 
 
@@ -347,7 +344,7 @@ abstract mixin class $RhttpError_RhttpStatusCodeErrorCopyWith<$Res> implements $
   factory $RhttpError_RhttpStatusCodeErrorCopyWith(RhttpError_RhttpStatusCodeError value, $Res Function(RhttpError_RhttpStatusCodeError) _then) = _$RhttpError_RhttpStatusCodeErrorCopyWithImpl;
 @useResult
 $Res call({
- int field0, List<(String, String,)> field1, HttpResponseBody field2
+ int field0, List<(String, String)> field1, HttpResponseBody field2
 });
 
 
@@ -368,7 +365,7 @@ class _$RhttpError_RhttpStatusCodeErrorCopyWithImpl<$Res>
   return _then(RhttpError_RhttpStatusCodeError(
 null == field0 ? _self.field0 : field0 // ignore: cast_nullable_to_non_nullable
 as int,null == field1 ? _self._field1 : field1 // ignore: cast_nullable_to_non_nullable
-as List<(String, String,)>,null == field2 ? _self.field2 : field2 // ignore: cast_nullable_to_non_nullable
+as List<(String, String)>,null == field2 ? _self.field2 : field2 // ignore: cast_nullable_to_non_nullable
 as HttpResponseBody,
   ));
 }
@@ -404,18 +401,16 @@ $RhttpError_RhttpInvalidCertificateErrorCopyWith<RhttpError_RhttpInvalidCertific
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpInvalidCertificateError&&(identical(other.field0, field0) || other.field0 == field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpInvalidCertificateError&&(identical(other.field0, field0) || other.field0 == field0));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,field0);
-}
+int get hashCode => Object.hash(runtimeType,field0);
 
 @override
 String toString() {
-    return 'RhttpError.rhttpInvalidCertificateError(field0: $field0)';
+  return 'RhttpError.rhttpInvalidCertificateError(field0: $field0)';
 }
 
 
@@ -472,18 +467,16 @@ $RhttpError_RhttpConnectionErrorCopyWith<RhttpError_RhttpConnectionError> get co
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpConnectionError&&(identical(other.field0, field0) || other.field0 == field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpConnectionError&&(identical(other.field0, field0) || other.field0 == field0));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,field0);
-}
+int get hashCode => Object.hash(runtimeType,field0);
 
 @override
 String toString() {
-    return 'RhttpError.rhttpConnectionError(field0: $field0)';
+  return 'RhttpError.rhttpConnectionError(field0: $field0)';
 }
 
 
@@ -540,18 +533,16 @@ $RhttpError_RhttpUnknownErrorCopyWith<RhttpError_RhttpUnknownError> get copyWith
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpUnknownError&&(identical(other.field0, field0) || other.field0 == field0));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RhttpError_RhttpUnknownError&&(identical(other.field0, field0) || other.field0 == field0));
 }
 
 
 @override
-int get hashCode {
-    return Object.hash(runtimeType,field0);
-}
+int get hashCode => Object.hash(runtimeType,field0);
 
 @override
 String toString() {
-    return 'RhttpError.rhttpUnknownError(field0: $field0)';
+  return 'RhttpError.rhttpUnknownError(field0: $field0)';
 }
 
 

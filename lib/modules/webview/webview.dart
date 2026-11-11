@@ -114,26 +114,27 @@ class _MangaWebViewState extends ConsumerState<MangaWebView> {
       // Opened as a child of this window and centred on it, so size it to
       // cover the area below the toolbar.
       final size = MediaQuery.sizeOf(context);
+      // CLASSIC: desktop_webview_window pinned to 0.3.2 (flutter_web_auth_2 5.x
+      // constraint) - no brightness/titleBar/navigationState in that API.
       _desktopWebview = await WebviewWindow.create(
         configuration: CreateConfiguration(
           title: widget.title,
-          brightness: Brightness.dark,
-          titleBar: const TitleBarOptions(
-            showNavigation: false,
-            showReload: false,
-          ),
           windowWidth: (size.width - 64).round(),
           windowHeight: (size.height - 180).round(),
         ),
       );
-      final navigation = _desktopWebview!.navigationState;
-      navigation.addListener(() {
+      _desktopWebview!.setBrightness(Brightness.dark);
+      _desktopWebview!.isNavigating.addListener(() {
         if (!mounted) return;
-        final state = navigation.value;
         setState(() {
-          _progress = state.isLoading ? 0 : 1;
-          _canGoback = state.canGoBack;
-          _canGoForward = state.canGoForward;
+          _progress = _desktopWebview!.isNavigating.value ? 0 : 1;
+        });
+      });
+      _desktopWebview!.setOnHistoryChangedCallback((canGoBack, canGoForward) {
+        if (!mounted) return;
+        setState(() {
+          _canGoback = canGoBack;
+          _canGoForward = canGoForward;
         });
       });
 

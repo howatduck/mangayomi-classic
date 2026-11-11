@@ -74,7 +74,7 @@ abstract class _$FlexSchemeColorState
   (FlexSchemeColor, int) build();
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref =
         this.ref as $Ref<(FlexSchemeColor, int), (FlexSchemeColor, int)>;
     final element =
@@ -85,6 +85,6 @@ abstract class _$FlexSchemeColorState
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, build);
+    element.handleCreate(ref, build);
   }
 }

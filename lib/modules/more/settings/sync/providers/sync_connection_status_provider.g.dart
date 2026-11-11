@@ -93,7 +93,7 @@ abstract class _$SyncConnectionState extends $Notifier<SyncConnectionStatus> {
   SyncConnectionStatus build({required int syncId});
   @$mustCallSuper
   @override
-  WhenComplete runBuild() {
+  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
     final ref = this.ref as $Ref<SyncConnectionStatus, SyncConnectionStatus>;
     final element =
         ref.element
@@ -103,6 +103,6 @@ abstract class _$SyncConnectionState extends $Notifier<SyncConnectionStatus> {
               Object?,
               Object?
             >;
-    return element.handleCreate(ref, () => build(syncId: _$args));
+    element.handleCreate(ref, () => build(syncId: _$args));
   }
 }

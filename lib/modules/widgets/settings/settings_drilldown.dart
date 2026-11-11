@@ -318,7 +318,7 @@ class _DrilldownHeader extends StatelessWidget {
               transitionBuilder: (child, animation) {
                 return SizeTransition(
                   axis: Axis.horizontal,
-                  alignment: Alignment.centerLeft,
+                  axisAlignment: -1.0, // CLASSIC: SizeTransition.alignment is 3.35+
                   sizeFactor: animation,
                   child: FadeTransition(
                     opacity: animation,

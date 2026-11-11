@@ -30,8 +30,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
     try {
       final didAuthenticate = await _localAuth.authenticate(
         localizedReason: l10n.auth_unlock_msg,
-        biometricOnly: false,
-        persistAcrossBackgrounding: true,
+        options: const AuthenticationOptions(biometricOnly: false, stickyAuth: true), // CLASSIC: local_auth 2.3 API
       );
       if (didAuthenticate && mounted) {
         ref.read(appUnlockedStateProvider.notifier).unlock();

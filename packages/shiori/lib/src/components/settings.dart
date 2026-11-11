@@ -112,7 +112,6 @@ class ShioriSettingRow extends StatelessWidget {
             ? null
             : Text(subtitle!, maxLines: 3, overflow: TextOverflow.ellipsis),
         trailing: trailing,
-        minTileHeight: tokens.density.rowHeight,
         onTap: onTap,
       ),
     );
@@ -161,7 +160,6 @@ class ShioriSwitchRow extends StatelessWidget {
               leading: _leading(icon),
               title: Text(title),
               subtitle: subtitleText,
-              minTileHeight: tokens.density.rowHeight,
               onTap: onChanged == null ? null : () => onChanged!(!value),
               trailing: ExcludeFocus(
                 child: IgnorePointer(
@@ -192,7 +190,6 @@ class ShioriSwitchRow extends StatelessWidget {
         subtitle: subtitleText,
         value: value,
         onChanged: onChanged,
-        minTileHeight: tokens.density.rowHeight,
       ),
     );
   }

@@ -93,7 +93,8 @@ class _CustomNavigationSettingsState
               ],
             );
           },
-          onReorderItem: (oldIndex, newIndex) {
+          onReorder: (oldIndex, newIndexRaw) { // CLASSIC: Flutter 3.32 onReorder semantics
+              final newIndex = newIndexRaw > oldIndex ? newIndexRaw - 1 : newIndexRaw;
             final reordered = navigationOrder.toList();
             if (oldIndex < newIndex) {
               final draggedItem = reordered[oldIndex];
