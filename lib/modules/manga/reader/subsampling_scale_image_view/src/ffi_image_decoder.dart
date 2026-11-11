@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:ui' as ui;
 
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
@@ -70,6 +71,7 @@ class FfiImageDecoder {
   static DynamicLibrary? _dylib;
 
   bool _isRunning = false;
+  bool _classicNativeUnsupported = false;
   Future<void>? _startFuture;
   Isolate? _cIsolate;
   ReceivePort? _receivePort;
@@ -385,6 +387,7 @@ class FfiImageDecoder {
     DecodeParams params, {
     Object? cancelToken,
   }) async {
+    if (_classicNativeUnsupported) return _classicDecodeRegion(params);
     await start();
     if (_sendPort == null) {
       if (kDebugMode) {
@@ -403,7 +406,16 @@ class FfiImageDecoder {
     _queue.add(job);
     _processNext();
 
-    return completer.future;
+    final ffiResult = await completer.future;
+    if (ffiResult != null &&
+        ffiResult.pointerAddress != null &&
+        ffiResult.error == null) {
+      return ffiResult;
+    }
+    if (ffiResult?.error == 'Cancelled') return ffiResult;
+    // CLASSIC PATCH: the native decoder needs AImageDecoder (Android 11+);
+    // on older Android it can never initialise, so decode with dart:ui.
+    return await _classicDecodeRegion(params) ?? ffiResult;
   }
 
   Future<List<int>?> getImageDimensionsAsync(
@@ -411,6 +423,7 @@ class FfiImageDecoder {
     bool cropBorders = false,
     Object? cancelToken,
   }) async {
+    if (_classicNativeUnsupported) return _classicReadDimensions(filePath);
     await start();
     if (_sendPort == null) {
       if (kDebugMode) {
@@ -438,7 +451,10 @@ class FfiImageDecoder {
     _queue.add(job);
     _processNext();
 
-    return completer.future;
+    final dims = await completer.future;
+    if (dims != null) return dims;
+    // CLASSIC PATCH: fall back to parsing the image header in Dart.
+    return _classicReadDimensions(filePath);
   }
 
   void _processNext() {
@@ -493,6 +509,11 @@ class FfiImageDecoder {
                       File('/storage/emulated/0/Mangayomi/reader_error.log')
                           .writeAsStringSync('FFI ${job.action}: ${response['error']}\n', mode: FileMode.append);
                     } catch (_) {}
+              final errStr = '${response['error']}';
+              if (errStr.contains('Failed to initialize decoder') ||
+                  errStr.contains('Error initializing FFI decoder')) {
+                _classicNativeUnsupported = true;
+              }
               if (job.action == 'getDimensions') {
                 job.completer.complete(null);
               } else {
@@ -591,3 +612,160 @@ class _DecodeJob {
 }
 
 final ffiImageDecoder = FfiImageDecoder();
+
+// ---------------------------------------------------------------------------
+// CLASSIC PATCH helpers: software fallback for devices without AImageDecoder
+// (Android < 11). The bundled native decoder loads its AImageDecoder symbols
+// at init time and fails on every file there, so dimensions are parsed from
+// the image header and regions are decoded with the dart:ui codec instead.
+// The returned pixel buffer follows the native contract: RGBA8888 memory the
+// caller owns and frees with calloc.free.
+// ---------------------------------------------------------------------------
+
+Future<List<int>?> _classicReadDimensions(String path) async {
+  RandomAccessFile? raf;
+  try {
+    final file = File(path);
+    final length = await file.length();
+    raf = await file.open();
+    final toRead = length < 1048576 ? length : 1048576;
+    final b = await raf.read(toRead);
+    if (b.length >= 10) {
+      final bd = ByteData.sublistView(b);
+      // PNG
+      if (b[0] == 0x89 && b[1] == 0x50 && b[2] == 0x4E && b[3] == 0x47) {
+        return [bd.getUint32(16), bd.getUint32(20)];
+      }
+      // GIF
+      if (b[0] == 0x47 && b[1] == 0x49 && b[2] == 0x46) {
+        return [bd.getUint16(6, Endian.little), bd.getUint16(8, Endian.little)];
+      }
+      // WebP
+      if (b.length >= 30 &&
+          b[0] == 0x52 && b[1] == 0x49 && b[2] == 0x46 && b[3] == 0x46 &&
+          b[8] == 0x57 && b[9] == 0x45 && b[10] == 0x42 && b[11] == 0x50) {
+        if (b[12] == 0x56 && b[15] == 0x58) {
+          // VP8X
+          final w = 1 + (b[24] | (b[25] << 8) | (b[26] << 16));
+          final h = 1 + (b[27] | (b[28] << 8) | (b[29] << 16));
+          return [w, h];
+        }
+        if (b[12] == 0x56 && b[15] == 0x4C) {
+          // VP8L
+          final w = 1 + (b[21] | ((b[22] & 0x3F) << 8));
+          final h = 1 + ((b[22] >> 6) | (b[23] << 2) | ((b[24] & 0x0F) << 10));
+          return [w, h];
+        }
+        // VP8 (lossy)
+        final w = bd.getUint16(26, Endian.little) & 0x3FFF;
+        final h = bd.getUint16(28, Endian.little) & 0x3FFF;
+        return [w, h];
+      }
+      // BMP
+      if (b[0] == 0x42 && b[1] == 0x4D && b.length >= 26) {
+        final w = bd.getInt32(18, Endian.little);
+        final h = bd.getInt32(22, Endian.little);
+        return [w, h < 0 ? -h : h];
+      }
+      // JPEG: walk segments looking for a start-of-frame marker
+      if (b[0] == 0xFF && b[1] == 0xD8) {
+        var i = 2;
+        while (i + 9 < b.length) {
+          if (b[i] != 0xFF) {
+            i++;
+            continue;
+          }
+          final marker = b[i + 1];
+          if (marker == 0xFF) {
+            i++;
+            continue;
+          }
+          if (marker == 0xD8 ||
+              marker == 0x01 ||
+              (marker >= 0xD0 && marker <= 0xD9)) {
+            i += 2;
+            continue;
+          }
+          final segLen = bd.getUint16(i + 2);
+          final isSof = marker >= 0xC0 &&
+              marker <= 0xCF &&
+              marker != 0xC4 &&
+              marker != 0xC8 &&
+              marker != 0xCC;
+          if (isSof) {
+            return [bd.getUint16(i + 7), bd.getUint16(i + 5)];
+          }
+          i += 2 + segLen;
+        }
+      }
+    }
+    return null;
+  } catch (_) {
+    return null;
+  } finally {
+    try {
+      await raf?.close();
+    } catch (_) {}
+  }
+}
+
+Future<DecodeResult?> _classicDecodeRegion(DecodeParams params) async {
+  try {
+    final bytes = await File(params.filePath).readAsBytes();
+    final buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
+    final codec = await ui.instantiateImageCodecFromBuffer(buffer);
+    final frame = await codec.getNextFrame();
+    codec.dispose();
+    final full = frame.image;
+
+    final regionW = params.right - params.left;
+    final regionH = params.bottom - params.top;
+    final sample = params.sampleSize < 1 ? 1 : params.sampleSize;
+    final destW = regionW ~/ sample;
+    final destH = regionH ~/ sample;
+    if (destW <= 0 || destH <= 0) {
+      full.dispose();
+      return null;
+    }
+
+    ui.Image out = full;
+    if (params.left != 0 ||
+        params.top != 0 ||
+        regionW != full.width ||
+        regionH != full.height ||
+        sample != 1) {
+      final recorder = ui.PictureRecorder();
+      final canvas = ui.Canvas(recorder);
+      canvas.drawImageRect(
+        full,
+        ui.Rect.fromLTRB(
+          params.left.toDouble(),
+          params.top.toDouble(),
+          params.right.toDouble(),
+          params.bottom.toDouble(),
+        ),
+        ui.Rect.fromLTWH(0, 0, destW.toDouble(), destH.toDouble()),
+        ui.Paint()..filterQuality = ui.FilterQuality.medium,
+      );
+      out = await recorder.endRecording().toImage(destW, destH);
+      full.dispose();
+    }
+
+    final byteData = await out.toByteData(format: ui.ImageByteFormat.rawRgba);
+    out.dispose();
+    if (byteData == null) return null;
+    final data = byteData.buffer.asUint8List(
+      byteData.offsetInBytes,
+      byteData.lengthInBytes,
+    );
+    final ptr = calloc<Uint8>(data.length);
+    ptr.asTypedList(data.length).setAll(0, data);
+    return DecodeResult(
+      pointerAddress: ptr.address,
+      width: destW,
+      height: destH,
+    );
+  } catch (_) {
+    return null;
+  }
+}
