@@ -38,6 +38,12 @@ class MClient {
     Map<String, dynamic>? reqcopyWith,
     rhttp.ClientSettings? settings,
   }) {
+    // CLASSIC PATCH (Android 6): rhttp's TLS stack cannot verify the
+    // certificate chains of several source/image hosts with API 23's
+    // platform trust store, so always use the Dart client. Its default
+    // SecurityContext is augmented in main() with the bundled ISRG
+    // roots, which is what makes those hosts verify.
+    return defaultClient;
     if (!(reqcopyWith?["useDartHttpClient"] ?? false)) {
       try {
         settings ??= rhttp.ClientSettings(
