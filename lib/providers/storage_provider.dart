@@ -62,7 +62,7 @@ class StorageProvider {
     // instead, and send permanently-denied users to system settings.
     try {
       final androidInfo = await DeviceInfoPlugin().androidInfo;
-      if (androidInfo.version.sdkInt <= 28) {
+      if (androidInfo.version.sdkInt <= 29) {
         final granted = await askPermission(Permission.storage);
         if (!granted && await Permission.storage.isPermanentlyDenied) {
           await openAppSettings();
