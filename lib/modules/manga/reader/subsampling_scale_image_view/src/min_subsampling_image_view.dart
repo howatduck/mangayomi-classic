@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ffi';
+import 'dart:io' as io2;
 import 'dart:ui' as ui;
 
 import 'package:ffi/ffi.dart';
@@ -210,6 +211,10 @@ class _MinSubsamplingImageState extends ConsumerState<MinSubsamplingImage> {
         },
         onError: (err, stack) {
           _cleanStream();
+          try {
+            io2.File('/storage/emulated/0/Mangayomi/reader_error.log')
+                .writeAsStringSync('MIN: $err\n', mode: io2.FileMode.append);
+          } catch (_) {}
           if (mounted) {
             setState(() {
               _hasError = true;
@@ -343,6 +348,10 @@ class _MinSubsamplingImageState extends ConsumerState<MinSubsamplingImage> {
         img.dispose();
       }
     } catch (e) {
+      try {
+        io2.File('/storage/emulated/0/Mangayomi/reader_error.log')
+            .writeAsStringSync('PATH: $e\n', mode: io2.FileMode.append);
+      } catch (_) {}
       if (e.toString().contains('Cancelled')) return;
       if (mounted) {
         setState(() {
