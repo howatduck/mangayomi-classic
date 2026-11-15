@@ -48,7 +48,7 @@ abstract class _$AudioPreferredLangState extends $Notifier<String> {
   String build();
   @$mustCallSuper
   @override
-  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<String, String>;
     final element =
         ref.element
@@ -58,7 +58,7 @@ abstract class _$AudioPreferredLangState extends $Notifier<String> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -102,7 +102,7 @@ abstract class _$EnableAudioPitchCorrectionState extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
-  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -112,7 +112,7 @@ abstract class _$EnableAudioPitchCorrectionState extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -154,7 +154,7 @@ abstract class _$AudioChannelState extends $Notifier<AudioChannel> {
   AudioChannel build();
   @$mustCallSuper
   @override
-  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AudioChannel, AudioChannel>;
     final element =
         ref.element
@@ -164,7 +164,7 @@ abstract class _$AudioChannelState extends $Notifier<AudioChannel> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -207,7 +207,7 @@ abstract class _$VolumeBoostCapState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -217,7 +217,7 @@ abstract class _$VolumeBoostCapState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -259,7 +259,7 @@ abstract class _$AudioDelayState extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -269,6 +269,6 @@ abstract class _$AudioDelayState extends $Notifier<int> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
