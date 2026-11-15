@@ -117,6 +117,10 @@ dependencies:
   pretty_qr_code: ^3.6.0
 
 dependency_overrides:
+  flutter_tts: 4.2.3
+  isar_community: 3.4.1
+  flutter_secure_storage: 10.2.0
+  flutter_secure_storage_windows: 4.1.0
   material_ui:
     path: packages/material_ui
   cupertino_ui:
