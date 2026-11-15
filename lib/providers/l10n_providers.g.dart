@@ -47,7 +47,7 @@ abstract class _$L10nLocaleState extends $Notifier<Locale> {
   Locale build();
   @$mustCallSuper
   @override
-  void runBuild() { // CLASSIC PATCH: riverpod 3.3.2-dev.2 runBuild is void
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<Locale, Locale>;
     final element =
         ref.element
@@ -57,6 +57,6 @@ abstract class _$L10nLocaleState extends $Notifier<Locale> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
