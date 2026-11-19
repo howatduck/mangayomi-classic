@@ -1,15 +1,36 @@
-name: Mangayomi Classic Build (Android 6.0 / API 23)
+name: Mangayomi Classic Build & Release (Android 6.0 / API 23)
+
 on:
   workflow_dispatch:
+    inputs:
+      make_release:
+        description: "Create the GitHub release when the build succeeds"
+        type: boolean
+        default: true
+      release_tag:
+        description: "Release tag override (default: v<version>-classic.1)"
+        type: string
+        required: false
+        default: ""
+
 concurrency:
   group: classic-build
   cancel-in-progress: false
+
 env:
   FLUTTER_VERSION: "3.32.8"
+  # SHA-256 of the certificate every Classic release ships with
+  # (registered as the DEBUG_KEYSTORE_B64 secret). The build aborts when
+  # the restored keystore does not match, so CI artifacts always update
+  # over existing installs.
+  EXPECTED_CERT_SHA256: "0fbbd400807a3fa61fe4701a96ad336fb074b5c87800cdfa033ab3fd52c9cfed"
+
 jobs:
   classic-android:
     runs-on: ubuntu-24.04
     timeout-minutes: 180
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - name: Free disk space
@@ -37,11 +58,41 @@ jobs:
         run: |
           export PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH"
           yes | sdkmanager --licenses >/dev/null 2>&1 || true
-          sdkmanager "platforms;android-35" "platforms;android-36" "build-tools;35.0.0" "cmake;3.22.1" "ndk;26.3.11579264"
-      - name: Pub resolution (classic)
+          sdkmanager "platforms;android-35" "platforms;android-36" "build-tools;35.0.0" "cmake;3.22.1" "ndk;26.3.11579264" "ndk;27.0.12077973"
+      - name: Restore signing keystore (secret)
+        env:
+          KEYSTORE_B64: ${{ secrets.DEBUG_KEYSTORE_B64 }}
         run: |
-          set -o pipefail
-          flutter pub get 2>&1 | tee pubget-classic.log
+          set -e
+          if [ -z "$KEYSTORE_B64" ]; then
+            echo "DEBUG_KEYSTORE_B64 secret is not set"
+            exit 1
+          fi
+          mkdir -p "$HOME/.android"
+          echo "$KEYSTORE_B64" | base64 -d > "$HOME/.android/debug.keystore"
+          FP=$(keytool -list -v -keystore "$HOME/.android/debug.keystore" -storepass android 2>/dev/null | grep 'SHA256:' | head -1 | sed 's/.*SHA256: *//; s/://g' | tr 'A-F' 'a-f')
+          echo "keystore cert SHA256: $FP"
+          if [ "$FP" != "$EXPECTED_CERT_SHA256" ]; then
+            echo "keystore fingerprint mismatch - refusing to sign with the wrong key"
+            exit 1
+          fi
+          {
+            echo "storePassword=android"
+            echo "keyPassword=android"
+            echo "keyAlias=androiddebugkey"
+            echo "storeFile=$HOME/.android/debug.keystore"
+          } > android/key.properties
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-classic-${{ runner.os }}-${{ hashFiles('pubspec.lock', 'android/**/*.gradle*', 'android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-classic-${{ runner.os }}-
+      - name: Pub resolution (classic)
+        run: flutter pub get
       - name: Prebuild subsampling native lib (CLASSIC - replaces native-assets hook)
         run: |
           set -e
@@ -50,50 +101,124 @@ jobs:
           "$TC/aarch64-linux-android23-clang++" -shared -fPIC -O2 -std=c++17 -I lib/ffi lib/ffi/image_decoder.cpp -o android/app/src/main/jniLibs/arm64-v8a/libsubsampling_scale_image_view.so
           "$TC/armv7a-linux-androideabi23-clang++" -shared -fPIC -O2 -std=c++17 -I lib/ffi lib/ffi/image_decoder.cpp -o android/app/src/main/jniLibs/armeabi-v7a/libsubsampling_scale_image_view.so
           ls -la android/app/src/main/jniLibs/*/libsubsampling_scale_image_view.so
-      - name: Build APK (classic, API 23)
+      - name: Resolve version + write local.properties
+        id: ver
         run: |
-          set -o pipefail
-          # Release signing falls back to a freshly generated debug keystore:
-          # this edition is sideloaded, not distributed via a store.
-          if [ ! -f "$HOME/.android/debug.keystore" ]; then
-            mkdir -p "$HOME/.android"
-            keytool -genkeypair -v -keystore "$HOME/.android/debug.keystore" -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" >/dev/null 2>&1
-          fi
-          {
-            echo "storePassword=android"
-            echo "keyPassword=android"
-            echo "keyAlias=androiddebugkey"
-            echo "storeFile=$HOME/.android/debug.keystore"
-          } > android/key.properties
+          set -e
+          V=$(grep -E '^version:' pubspec.yaml | head -1 | sed 's/^version: *//; s/ *#.*$//; s/ *$//')
+          VNAME="${V%%+*}"
+          VCODE="${V##*+}"
+          echo "pubspec version: $VNAME + $VCODE"
+          echo "vname=$VNAME" >> "$GITHUB_OUTPUT"
+          echo "vcode=$VCODE" >> "$GITHUB_OUTPUT"
           FLUTTER_SDK=$(dirname "$(dirname "$(readlink -f "$(which flutter)")")")
           {
             echo "sdk.dir=$ANDROID_SDK_ROOT"
             echo "flutter.sdk=$FLUTTER_SDK"
             echo "flutter.buildMode=release"
-            echo "flutter.versionName=0.9.95"
-            echo "flutter.versionCode=128"
+            echo "flutter.versionName=$VNAME"
+            echo "flutter.versionCode=$VCODE"
           } > android/local.properties
           cat android/local.properties
-          cd android && ./gradlew :app:assembleRelease -Ptarget-platform=android-arm,android-arm64 --stacktrace 2>&1 | tee ../build-classic.log
-      - name: Apply Isar kernel gate patch + re-sign (for kernels < 3.16)
+      - name: Build universal APK
+        run: |
+          set -o pipefail
+          cd android && ./gradlew :app:assembleRelease -Ptarget-platform=android-arm,android-arm64 --stacktrace 2>&1 | tee ../build-universal.log
+      - name: Finalize universal APK
         run: |
           set -e
-          APK=$(find build android -name "app-release.apk" -path "*outputs*" | head -1)
-          echo "built: $APK"
-          python3 tool/patch_isar_kernel_gate.py "$APK" mangayomi-classic-v0.9.95-android6.apk
+          export LIBCXX_BASE="$ANDROID_SDK_ROOT/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib"
           BT="$ANDROID_SDK_ROOT/build-tools/35.0.0"
-          "$BT/zipalign" -f 4 mangayomi-classic-v0.9.95-android6.apk mangayomi-classic-v0.9.95-android6-aligned.apk
-          "$BT/apksigner" sign --ks "$HOME/.android/debug.keystore" --ks-pass pass:android --key-pass pass:android mangayomi-classic-v0.9.95-android6-aligned.apk
-          mv mangayomi-classic-v0.9.95-android6-aligned.apk mangayomi-classic-v0.9.95-android6.apk
-          "$BT/apksigner" verify mangayomi-classic-v0.9.95-android6.apk
-          sha256sum mangayomi-classic-v0.9.95-android6.apk
-      - uses: actions/upload-artifact@v4
+          mkdir -p dist
+          SRC=$(find build android -name 'app-release.apk' -path '*outputs*' | head -1)
+          echo "built: $SRC"
+          python3 tool/patch_isar_kernel_gate.py "$SRC" /tmp/fin_patched.apk
+          for ABI in arm64-v8a armeabi-v7a x86_64; do
+            rm -f /tmp/fin_inj.apk
+            python3 tool/classic/inj_libcxx.py /tmp/fin_patched.apk /tmp/fin_inj.apk "$ABI"
+            if [ -f /tmp/fin_inj.apk ]; then mv /tmp/fin_inj.apk /tmp/fin_patched.apk; fi
+          done
+          python3 tool/classic/verify_libcxx.py /tmp/fin_patched.apk
+          OUT="dist/mangayomi-classic-v${{ steps.ver.outputs.vname }}-universal.apk"
+          "$BT/zipalign" -f -p 4 /tmp/fin_patched.apk /tmp/fin_aligned.apk
+          "$BT/apksigner" sign --ks "$HOME/.android/debug.keystore" --ks-pass pass:android --key-pass pass:android --out "$OUT" /tmp/fin_aligned.apk
+          "$BT/zipalign" -c 4 "$OUT" && echo ALIGN_OK
+          "$BT/apksigner" verify --verbose "$OUT" | head -4
+          BADGE=$("$BT/aapt2" dump badging "$OUT")
+          echo "$BADGE" | grep -E "package:|native-code|sdkVersion"
+          echo "$BADGE" | grep -q "versionCode='${{ steps.ver.outputs.vcode }}'"
+          echo "$BADGE" | grep -q "minSdkVersion:'23'"
+          echo "UNIVERSAL_FINALIZE_OK $OUT"
+      - name: Build + finalize split APKs (arm64 / armv7)
+        run: |
+          set -e
+          export LIBCXX_BASE="$ANDROID_SDK_ROOT/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib"
+          BT="$ANDROID_SDK_ROOT/build-tools/35.0.0"
+          VNAME="${{ steps.ver.outputs.vname }}"
+          VFINAL="${{ steps.ver.outputs.vcode }}"
+          build_split() {
+            local platform="$1" strip="$2" patch="$3" abi="$4" suffix="$5"
+            echo "=== SPLIT $suffix (platform=$platform) ==="
+            find build android -name 'app-release.apk' -path '*outputs*' -delete 2>/dev/null || true
+            (cd android && ./gradlew :app:assembleRelease -Ptarget-platform="$platform" --stacktrace)
+            local apk
+            apk=$(find build android -name 'app-release.apk' -path '*outputs*' | head -1)
+            echo "built: $apk"
+            python3 tool/classic/strip_abi.py "$apk" /tmp/split_stripped.apk "$strip"
+            python3 "$patch" /tmp/split_stripped.apk /tmp/split_patched.apk
+            rm -f /tmp/split_inj.apk
+            python3 tool/classic/inj_libcxx.py /tmp/split_patched.apk /tmp/split_inj.apk "$abi"
+            if [ -f /tmp/split_inj.apk ]; then mv /tmp/split_inj.apk /tmp/split_patched.apk; fi
+            python3 tool/classic/verify_libcxx.py /tmp/split_patched.apk
+            local out="dist/mangayomi-classic-v${VNAME}-${suffix}.apk"
+            "$BT/zipalign" -f -p 4 /tmp/split_patched.apk /tmp/split_aligned.apk
+            "$BT/apksigner" sign --ks "$HOME/.android/debug.keystore" --ks-pass pass:android --key-pass pass:android --out "$out" /tmp/split_aligned.apk
+            "$BT/apksigner" verify "$out"
+            local badge
+            badge=$("$BT/aapt2" dump badging "$out")
+            echo "$badge" | grep -E "package:|native-code"
+            echo "$badge" | grep -q "versionCode='$VFINAL'"
+            echo "$badge" | grep -q "minSdkVersion:'23'"
+            [ "$(echo "$badge" | grep 'native-code:')" = "native-code: '$abi'" ]
+            echo "=== SPLIT $suffix DONE ==="
+          }
+          build_split android-arm64 "armeabi-v7a,x86,x86_64" tool/patch_isar_kernel_gate.py arm64-v8a arm64
+          build_split android-arm "arm64-v8a,x86,x86_64" tool/classic/patch_v7a_passthrough.py armeabi-v7a armv7
+          ls -la dist/
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mangayomi-classic-android6
+          name: mangayomi-classic-apks
           path: |
-            mangayomi-classic-v0.9.95-android6.apk
-            pubget-classic.log
-            build-classic.log
+            dist/*.apk
+            build-universal.log
           if-no-files-found: warn
           retention-days: 30
+      - name: Create release
+        if: inputs.make_release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          VNAME="${{ steps.ver.outputs.vname }}"
+          VCODE="${{ steps.ver.outputs.vcode }}"
+          TAG="${{ inputs.release_tag }}"
+          if [ -z "$TAG" ]; then TAG="v${VNAME}-classic.1"; fi
+          {
+            echo "## Mangayomi Classic $TAG"
+            echo
+            echo "업스트림 Mangayomi $VNAME 베이스 + Classic 다운그레이드 스택 (minSdk 23). GitHub Actions 자동 빌드."
+            echo
+            echo "### 자산"
+            echo "| 파일 | 크기 | SHA-256 |"
+            echo "|---|---|---|"
+            for f in dist/*.apk; do
+              echo "| $(basename "$f") | $(stat -c%s "$f") | $(sha256sum "$f" | cut -d' ' -f1) |"
+            done
+            echo
+            echo "전 자산 versionCode $VCODE · minSdk 23 · 기존 릴리스와 동일 서명."
+            echo "armv7 빌드는 Isar 커널 게이트 미적용 — 커널 3.16 이상 필요."
+            echo "지원: Android 6~10 사용 가능, 실기 검증은 6.0·10 양 끝단, 7~9 미검증. 이 릴리스는 자동 빌드로 기기 실기 검증은 수행하지 않음."
+          } > dist/notes.md
+          gh release create "$TAG" --target "$GITHUB_REF_NAME" --title "Mangayomi Classic $TAG" --notes-file dist/notes.md dist/*.apk
