@@ -123,7 +123,18 @@ jobs:
       - name: Build universal APK
         run: |
           set -o pipefail
-          cd android && ./gradlew :app:assembleRelease -Ptarget-platform=android-arm,android-arm64 --stacktrace 2>&1 | tee ../build-universal.log
+          cd android
+          # Maven Central rate-limits shared runner IPs (HTTP 429) - retry
+          # with backoff; Gradle resumes from its cache between attempts.
+          for attempt in 1 2 3; do
+            ./gradlew :app:assembleRelease -Ptarget-platform=android-arm,android-arm64 --stacktrace 2>&1 | tee ../build-universal.log && break
+            if [ "$attempt" = 3 ]; then
+              echo "gradle failed after 3 attempts"
+              exit 1
+            fi
+            echo "gradle attempt $attempt failed - retrying in 60s"
+            sleep 60
+          done
       - name: Finalize universal APK
         run: |
           set -e
@@ -160,7 +171,18 @@ jobs:
             local platform="$1" strip="$2" patch="$3" abi="$4" suffix="$5"
             echo "=== SPLIT $suffix (platform=$platform) ==="
             find build android -name 'app-release.apk' -path '*outputs*' -delete 2>/dev/null || true
-            (cd android && ./gradlew :app:assembleRelease -Ptarget-platform="$platform" --stacktrace)
+            local try
+            for try in 1 2 3; do
+              if (cd android && ./gradlew :app:assembleRelease -Ptarget-platform="$platform" --stacktrace); then
+                break
+              fi
+              if [ "$try" = 3 ]; then
+                echo "gradle failed after 3 attempts"
+                return 1
+              fi
+              echo "gradle attempt $try failed - retrying in 60s"
+              sleep 60
+            done
             local apk
             apk=$(find build android -name 'app-release.apk' -path '*outputs*' | head -1)
             echo "built: $apk"
