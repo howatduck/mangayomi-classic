@@ -216,7 +216,7 @@ jobs:
             dist/*.apk
             build-universal.log
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 7
       - name: Create release
         if: inputs.make_release
         env:
