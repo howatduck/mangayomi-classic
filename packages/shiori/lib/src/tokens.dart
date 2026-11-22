@@ -481,8 +481,10 @@ abstract final class ShioriMotion {
 
   /// Whether the platform asks for less motion: iOS "Reduce Motion", or no
   /// animation at all. Movement is then a fade instead, as the reader asked.
-  static bool reducedOf(BuildContext context) =>
-      stillOf(context) || (MediaQuery.maybeReduceMotionOf(context) ?? false);
+  // CLASSIC: MediaQuery.maybeReduceMotionOf needs Flutter >= 3.50; on the
+  // classic toolchain (3.32) disableAnimations is the only motion signal,
+  // already covered by stillOf, so reduced motion is the same as still.
+  static bool reducedOf(BuildContext context) => stillOf(context);
 
   /// [duration], or nothing when the platform asks for less motion.
   ///

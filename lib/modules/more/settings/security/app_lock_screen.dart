@@ -49,7 +49,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
     } catch (error, stack) {
       // No way to authenticate, or a prompt already up: the button stays
       // for another try, and the reason is kept.
-      recordError(error, stack: stack, source: app_lock);
+      recordError(error, stack: stack, source: 'app_lock');
     } finally {
       if (mounted) {
         setState(() => _isAuthenticating = false);
