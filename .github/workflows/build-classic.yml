@@ -160,9 +160,16 @@ jobs:
           echo "$BADGE" | grep -q "versionCode='${{ steps.ver.outputs.vcode }}'"
           echo "$BADGE" | grep -q "minSdkVersion:'23'"
           echo "UNIVERSAL_FINALIZE_OK $OUT"
+      - name: Stop Gradle daemon before splits
+        run: |
+          (cd android && ./gradlew --stop) || true
+          sleep 5
+          free -h
+          ps aux | grep -i java | head || true
       - name: Build + finalize split APKs (arm64 / armv7)
         run: |
           set -e
+          free -h
           export LIBCXX_BASE="$ANDROID_SDK_ROOT/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib"
           BT="$ANDROID_SDK_ROOT/build-tools/35.0.0"
           VNAME="${{ steps.ver.outputs.vname }}"
@@ -173,7 +180,7 @@ jobs:
             find build android -name 'app-release.apk' -path '*outputs*' -delete 2>/dev/null || true
             local try
             for try in 1 2 3; do
-              if (cd android && ./gradlew :app:assembleRelease -Ptarget-platform="$platform" --stacktrace); then
+              if (cd android && ./gradlew --no-daemon :app:assembleRelease -Ptarget-platform="$platform" --stacktrace); then
                 break
               fi
               if [ "$try" = 3 ]; then
