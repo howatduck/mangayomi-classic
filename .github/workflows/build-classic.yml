@@ -239,13 +239,6 @@ jobs:
             echo
             echo "Upstream Mangayomi $VNAME base + Classic downgrade stack (minSdk 23). Built with GitHub Actions."
             echo
-            echo "### Assets"
-            echo "| File | Size | SHA-256 |"
-            echo "|---|---|---|"
-            for f in dist/*.apk; do
-              echo "| $(basename "$f") | $(stat -c%s "$f") | $(sha256sum "$f" | cut -d' ' -f1) |"
-            done
-            echo
             echo "All assets: versionCode $VCODE · minSdk 23 · same signing certificate as previous releases."
             echo "The armv7 build does not apply the Isar kernel gate — kernel 3.16 or later is required."
             echo "Requires Android 6.0 (API 23) or later."
