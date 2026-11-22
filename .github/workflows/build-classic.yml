@@ -237,17 +237,17 @@ jobs:
           {
             echo "## Mangayomi Classic $TAG"
             echo
-            echo "업스트림 Mangayomi $VNAME 베이스 + Classic 다운그레이드 스택 (minSdk 23). GitHub Actions 자동 빌드."
+            echo "Upstream Mangayomi $VNAME base + Classic downgrade stack (minSdk 23). Built with GitHub Actions."
             echo
-            echo "### 자산"
-            echo "| 파일 | 크기 | SHA-256 |"
+            echo "### Assets"
+            echo "| File | Size | SHA-256 |"
             echo "|---|---|---|"
             for f in dist/*.apk; do
               echo "| $(basename "$f") | $(stat -c%s "$f") | $(sha256sum "$f" | cut -d' ' -f1) |"
             done
             echo
-            echo "전 자산 versionCode $VCODE · minSdk 23 · 기존 릴리스와 동일 서명."
-            echo "armv7 빌드는 Isar 커널 게이트 미적용 — 커널 3.16 이상 필요."
-            echo "지원: Android 6~10 사용 가능, 실기 검증은 6.0·10 양 끝단, 7~9 미검증. 이 릴리스는 자동 빌드로 기기 실기 검증은 수행하지 않음."
+            echo "All assets: versionCode $VCODE · minSdk 23 · same signing certificate as previous releases."
+            echo "The armv7 build does not apply the Isar kernel gate — kernel 3.16 or later is required."
+            echo "Requires Android 6.0 (API 23) or later."
           } > dist/notes.md
           gh release create "$TAG" --target "$GITHUB_REF_NAME" --title "Mangayomi Classic $TAG" --notes-file dist/notes.md dist/*.apk
