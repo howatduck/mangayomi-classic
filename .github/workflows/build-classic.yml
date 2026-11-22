@@ -8,7 +8,7 @@ on:
         type: boolean
         default: true
       release_tag:
-        description: "Release tag override (default: v<version>-classic.1)"
+        description: "Release tag override (default: v<version>)"
         type: string
         required: false
         default: ""
@@ -233,7 +233,7 @@ jobs:
           VNAME="${{ steps.ver.outputs.vname }}"
           VCODE="${{ steps.ver.outputs.vcode }}"
           TAG="${{ inputs.release_tag }}"
-          if [ -z "$TAG" ]; then TAG="v${VNAME}-classic.1"; fi
+          if [ -z "$TAG" ]; then TAG="v${VNAME}"; fi
           {
             echo "## Mangayomi Classic $TAG"
             echo
